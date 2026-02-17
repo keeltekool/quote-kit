@@ -22,11 +22,11 @@ export default async function AppLayout({
   }
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-background flex flex-col">
       <MobileNav />
-      <div className="flex">
+      <div className="flex flex-1">
         <AppSidebar />
-        <main className="flex-1 p-6 lg:p-8">{children}</main>
+        <main className="flex-1 p-6 lg:p-8 bg-white">{children}</main>
       </div>
     </div>
   );
