@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="et">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>QuoteKit — Ühendus puudub</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: Inter, -apple-system, sans-serif;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      background: #F8FAFC;
+      color: #0F172A;
+      padding: 2rem;
+    }
+    .card {
+      text-align: center;
+      max-width: 400px;
+    }
+    .icon {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+    }
+    h1 {
+      font-size: 1.25rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+    }
+    p {
+      color: #64748B;
+      font-size: 0.875rem;
+      line-height: 1.5;
+    }
+    button {
+      margin-top: 1.5rem;
+      padding: 0.625rem 1.5rem;
+      background: #2563EB;
+      color: white;
+      border: none;
+      border-radius: 0.5rem;
+      font-size: 0.875rem;
+      font-weight: 500;
+      cursor: pointer;
+    }
+    button:hover { background: #1D4ED8; }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <div class="icon">&#128268;</div>
+    <h1>Internetiühendus puudub</h1>
+    <p>QuoteKit vajab töötamiseks internetiühendust. Kontrolli oma ühendust ja proovi uuesti.</p>
+    <button onclick="location.reload()">Proovi uuesti</button>
+  </div>
+</body>
+</html>

@@ -1,7 +1,8 @@
 "use client";
 
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 import { useTranslations } from "next-intl";
+import Image from "next/image";
 
 type Profile = {
   id: string;
@@ -133,6 +134,50 @@ export default function SettingsPage() {
     setSaving(false);
   };
 
+  // Logo upload
+  const fileInputRef = useRef<HTMLInputElement>(null);
+  const [uploading, setUploading] = useState(false);
+  const [logoUrl, setLogoUrl] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (profile) setLogoUrl(profile.logoUrl);
+  }, [profile]);
+
+  const handleLogoUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    if (file.size > 2 * 1024 * 1024) {
+      alert("Fail on liiga suur. Maksimaalselt 2MB.");
+      return;
+    }
+
+    setUploading(true);
+    const formData = new FormData();
+    formData.append("file", file);
+
+    const res = await fetch("/api/profile/logo", {
+      method: "POST",
+      body: formData,
+    });
+
+    if (res.ok) {
+      const { data } = await res.json();
+      setLogoUrl(data.logoUrl);
+    } else {
+      alert("Logo üleslaadimine ebaõnnestus");
+    }
+    setUploading(false);
+    if (fileInputRef.current) fileInputRef.current.value = "";
+  };
+
+  const handleLogoDelete = async () => {
+    setUploading(true);
+    const res = await fetch("/api/profile/logo", { method: "DELETE" });
+    if (res.ok) setLogoUrl(null);
+    setUploading(false);
+  };
+
   if (loading) {
     return (
       <div>
@@ -255,6 +300,71 @@ export default function SettingsPage() {
                   onChange={(e) => updateField("email", e.target.value)}
                   className="w-full rounded-lg border border-border px-3 py-2 text-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none"
                 />
+              </div>
+            </div>
+          </div>
+
+          {/* Logo */}
+          <div className="bg-white border border-border rounded-xl p-6">
+            <h2 className="text-sm font-semibold mb-4">Logo</h2>
+            <div className="flex items-center gap-6">
+              {logoUrl ? (
+                <div className="relative w-24 h-24 rounded-lg border border-border overflow-hidden bg-surface">
+                  <Image
+                    src={logoUrl}
+                    alt="Logo"
+                    fill
+                    className="object-contain"
+                  />
+                </div>
+              ) : (
+                <div className="w-24 h-24 rounded-lg border-2 border-dashed border-border flex items-center justify-center text-muted">
+                  <svg
+                    className="w-8 h-8"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={1.5}
+                      d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"
+                    />
+                  </svg>
+                </div>
+              )}
+              <div className="flex flex-col gap-2">
+                <input
+                  ref={fileInputRef}
+                  type="file"
+                  accept="image/png,image/jpeg,image/webp,image/svg+xml"
+                  onChange={handleLogoUpload}
+                  className="hidden"
+                />
+                <button
+                  onClick={() => fileInputRef.current?.click()}
+                  disabled={uploading}
+                  className="px-4 py-2 text-sm font-medium border border-border rounded-lg hover:bg-surface transition-colors disabled:opacity-50"
+                >
+                  {uploading
+                    ? "Laadin..."
+                    : logoUrl
+                      ? "Vaheta logo"
+                      : "Lae logo üles"}
+                </button>
+                {logoUrl && (
+                  <button
+                    onClick={handleLogoDelete}
+                    disabled={uploading}
+                    className="px-4 py-2 text-sm text-red-600 hover:text-red-700 transition-colors disabled:opacity-50"
+                  >
+                    Eemalda logo
+                  </button>
+                )}
+                <p className="text-xs text-muted">
+                  PNG, JPEG, WebP, SVG. Maks. 2MB.
+                </p>
               </div>
             </div>
           </div>
