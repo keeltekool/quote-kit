@@ -1,0 +1,423 @@
+"use client";
+
+import { useState, useEffect } from "react";
+import { useTranslations } from "next-intl";
+import { useRouter, useParams } from "next/navigation";
+import type { LineItem, ClientSnapshot, BusinessSnapshot } from "@/lib/db/schema";
+
+type Invoice = {
+  id: string;
+  invoiceNumber: string;
+  quoteId: string | null;
+  status: string;
+  clientSnapshot: ClientSnapshot;
+  businessSnapshot: BusinessSnapshot;
+  lineItems: LineItem[];
+  notes: string | null;
+  subtotal: string;
+  vatRate: string | null;
+  vatAmount: string | null;
+  total: string;
+  invoiceDate: string;
+  serviceDate: string | null;
+  dueDate: string;
+  paymentTermsDays: number;
+  paidAt: string | null;
+  cancelledAt: string | null;
+  createdAt: string;
+};
+
+const statusColors: Record<string, string> = {
+  issued: "bg-blue-50 text-blue-700",
+  sent: "bg-indigo-50 text-indigo-700",
+  paid: "bg-emerald-50 text-emerald-700",
+  overdue: "bg-red-50 text-red-700",
+  cancelled: "bg-gray-100 text-gray-500",
+};
+
+export default function InvoiceDetailPage() {
+  const t = useTranslations();
+  const router = useRouter();
+  const params = useParams();
+  const [invoice, setInvoice] = useState<Invoice | null>(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchInvoice = async () => {
+      const res = await fetch(`/api/invoices/${params.id}`);
+      if (!res.ok) {
+        router.push("/invoices");
+        return;
+      }
+      const { data } = await res.json();
+      setInvoice(data);
+      setLoading(false);
+    };
+    fetchInvoice();
+  }, [params.id, router]);
+
+  const handleStatusUpdate = async (status: string) => {
+    if (!invoice) return;
+    await fetch(`/api/invoices/${invoice.id}/status`, {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ status }),
+    });
+    const res = await fetch(`/api/invoices/${invoice.id}`);
+    const { data } = await res.json();
+    setInvoice(data);
+  };
+
+  const formatDate = (d: string) =>
+    new Date(d).toLocaleDateString("et-EE", {
+      day: "2-digit",
+      month: "2-digit",
+      year: "numeric",
+    });
+
+  const formatMoney = (v: string) =>
+    `€${parseFloat(v).toLocaleString("et-EE", {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2,
+    })}`;
+
+  if (loading || !invoice) {
+    return (
+      <div>
+        <h1 className="text-2xl font-bold">{t("invoices.title")}</h1>
+        <p className="mt-4 text-muted">{t("common.loading")}</p>
+      </div>
+    );
+  }
+
+  const labor = invoice.lineItems.filter((i) => !i.isMaterial);
+  const materials = invoice.lineItems.filter((i) => i.isMaterial);
+  const isOverdue =
+    invoice.status === "sent" && new Date(invoice.dueDate) < new Date();
+  const biz = invoice.businessSnapshot;
+
+  return (
+    <div className="max-w-4xl">
+      {/* Header */}
+      <div className="flex items-center justify-between mb-6">
+        <div>
+          <button
+            onClick={() => router.push("/invoices")}
+            className="text-sm text-muted hover:text-foreground mb-2 inline-block"
+          >
+            &larr; {t("invoices.title")}
+          </button>
+          <h1 className="text-2xl font-bold flex items-center gap-3">
+            {invoice.invoiceNumber}
+            <span
+              className={`text-sm px-2.5 py-1 rounded ${
+                isOverdue
+                  ? statusColors.overdue
+                  : statusColors[invoice.status] || "bg-gray-100"
+              }`}
+            >
+              {isOverdue ? t("invoices.overdue") : t(`invoices.${invoice.status}`)}
+            </span>
+            {invoice.quoteId && (
+              <span className="text-xs font-normal text-muted">
+                (pakkumisest)
+              </span>
+            )}
+          </h1>
+        </div>
+
+        <div className="flex gap-2">
+          {(invoice.status === "issued" || invoice.status === "sent") && (
+            <button
+              onClick={() => handleStatusUpdate("paid")}
+              className="px-4 py-2 text-sm font-medium text-white bg-emerald-600 rounded-lg hover:bg-emerald-700"
+            >
+              {t("invoices.markPaid")}
+            </button>
+          )}
+          {invoice.status === "issued" && (
+            <button
+              onClick={() => handleStatusUpdate("sent")}
+              className="px-4 py-2 text-sm font-medium text-blue-600 border border-blue-300 rounded-lg hover:bg-blue-50"
+            >
+              {t("invoices.markSent")}
+            </button>
+          )}
+          {invoice.status !== "paid" && invoice.status !== "cancelled" && (
+            <button
+              onClick={() => {
+                if (confirm("Tühistada arve?")) handleStatusUpdate("cancelled");
+              }}
+              className="px-3 py-2 text-sm text-muted hover:text-error border border-border rounded-lg hover:border-red-300"
+            >
+              {t("invoices.cancel")}
+            </button>
+          )}
+        </div>
+      </div>
+
+      {/* Info grid */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+        {/* Seller */}
+        <div className="bg-white border border-border rounded-xl p-4">
+          <h3 className="text-xs text-muted uppercase tracking-wide mb-2">
+            {t("invoices.seller")}
+          </h3>
+          <p className="font-semibold">{biz.companyName}</p>
+          <p className="text-sm text-muted">
+            Reg. nr: {biz.registryCode}
+          </p>
+          {biz.isVatRegistered && biz.kmkrNumber && (
+            <p className="text-sm text-muted">KMKR: {biz.kmkrNumber}</p>
+          )}
+          <p className="text-sm text-muted">{biz.address}</p>
+          <p className="text-sm text-muted">{biz.email}</p>
+          <p className="text-sm text-muted">{biz.phone}</p>
+        </div>
+
+        {/* Client */}
+        <div className="bg-white border border-border rounded-xl p-4">
+          <h3 className="text-xs text-muted uppercase tracking-wide mb-2">
+            {t("invoices.client")}
+          </h3>
+          <p className="font-semibold">{invoice.clientSnapshot.name}</p>
+          {invoice.clientSnapshot.registryCode && (
+            <p className="text-sm text-muted">
+              Reg. nr: {invoice.clientSnapshot.registryCode}
+            </p>
+          )}
+          {invoice.clientSnapshot.kmkrNumber && (
+            <p className="text-sm text-muted">
+              KMKR: {invoice.clientSnapshot.kmkrNumber}
+            </p>
+          )}
+          <p className="text-sm text-muted">
+            {invoice.clientSnapshot.address}
+          </p>
+          {invoice.clientSnapshot.email && (
+            <p className="text-sm text-muted">
+              {invoice.clientSnapshot.email}
+            </p>
+          )}
+        </div>
+      </div>
+
+      {/* Invoice metadata */}
+      <div className="bg-white border border-border rounded-xl p-4 mb-6">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
+          <div>
+            <span className="text-xs text-muted block">Arve kuupäev</span>
+            <span className="font-medium">{formatDate(invoice.invoiceDate)}</span>
+          </div>
+          {invoice.serviceDate && (
+            <div>
+              <span className="text-xs text-muted block">
+                {t("invoices.serviceDate")}
+              </span>
+              <span className="font-medium">
+                {formatDate(invoice.serviceDate)}
+              </span>
+            </div>
+          )}
+          <div>
+            <span className="text-xs text-muted block">Maksetähtaeg</span>
+            <span
+              className={`font-medium ${
+                isOverdue ? "text-red-600" : ""
+              }`}
+            >
+              {formatDate(invoice.dueDate)}
+            </span>
+          </div>
+          <div>
+            <span className="text-xs text-muted block">Maksetingimused</span>
+            <span className="font-medium">
+              {invoice.paymentTermsDays} päeva
+            </span>
+          </div>
+        </div>
+      </div>
+
+      {/* Line items */}
+      <div className="bg-white border border-border rounded-xl overflow-hidden mb-6">
+        <table className="w-full text-sm">
+          <thead>
+            <tr className="border-b border-border bg-surface">
+              <th className="text-left px-4 py-2.5 font-medium w-8">Nr</th>
+              <th className="text-left px-4 py-2.5 font-medium">Kirjeldus</th>
+              <th className="text-right px-4 py-2.5 font-medium">Kogus</th>
+              <th className="text-center px-4 py-2.5 font-medium">Ühik</th>
+              <th className="text-right px-4 py-2.5 font-medium">Ühikuhind</th>
+              <th className="text-right px-4 py-2.5 font-medium">Kokku</th>
+            </tr>
+          </thead>
+          <tbody>
+            {/* Labor items */}
+            {labor.length > 0 && (
+              <>
+                <tr className="bg-surface/30">
+                  <td
+                    colSpan={6}
+                    className="px-4 py-1.5 text-xs text-muted uppercase tracking-wide font-medium"
+                  >
+                    Tööd
+                  </td>
+                </tr>
+                {labor.map((item, i) => (
+                  <tr key={`l-${i}`} className="border-b border-border">
+                    <td className="px-4 py-2.5 text-muted">{i + 1}</td>
+                    <td className="px-4 py-2.5">{item.description}</td>
+                    <td className="px-4 py-2.5 text-right font-mono">
+                      {item.quantity}
+                    </td>
+                    <td className="px-4 py-2.5 text-center">{item.unit}</td>
+                    <td className="px-4 py-2.5 text-right font-mono">
+                      {formatMoney(item.unitPrice.toFixed(2))}
+                    </td>
+                    <td className="px-4 py-2.5 text-right font-mono font-medium">
+                      {formatMoney(item.total.toFixed(2))}
+                    </td>
+                  </tr>
+                ))}
+              </>
+            )}
+
+            {/* Material items */}
+            {materials.length > 0 && (
+              <>
+                <tr className="bg-surface/30">
+                  <td
+                    colSpan={6}
+                    className="px-4 py-1.5 text-xs text-muted uppercase tracking-wide font-medium"
+                  >
+                    Materjalid
+                  </td>
+                </tr>
+                {materials.map((item, i) => (
+                  <tr key={`m-${i}`} className="border-b border-border">
+                    <td className="px-4 py-2.5 text-muted">
+                      {labor.length + i + 1}
+                    </td>
+                    <td className="px-4 py-2.5">{item.description}</td>
+                    <td className="px-4 py-2.5 text-right font-mono">
+                      {item.quantity}
+                    </td>
+                    <td className="px-4 py-2.5 text-center">{item.unit}</td>
+                    <td className="px-4 py-2.5 text-right font-mono">
+                      {formatMoney(item.unitPrice.toFixed(2))}
+                    </td>
+                    <td className="px-4 py-2.5 text-right font-mono font-medium">
+                      {formatMoney(item.total.toFixed(2))}
+                    </td>
+                  </tr>
+                ))}
+              </>
+            )}
+
+            {/* Fallback if no separation */}
+            {labor.length === 0 &&
+              materials.length === 0 &&
+              invoice.lineItems.map((item, i) => (
+                <tr key={i} className="border-b border-border">
+                  <td className="px-4 py-2.5 text-muted">{i + 1}</td>
+                  <td className="px-4 py-2.5">{item.description}</td>
+                  <td className="px-4 py-2.5 text-right font-mono">
+                    {item.quantity}
+                  </td>
+                  <td className="px-4 py-2.5 text-center">{item.unit}</td>
+                  <td className="px-4 py-2.5 text-right font-mono">
+                    {formatMoney(item.unitPrice.toFixed(2))}
+                  </td>
+                  <td className="px-4 py-2.5 text-right font-mono font-medium">
+                    {formatMoney(item.total.toFixed(2))}
+                  </td>
+                </tr>
+              ))}
+          </tbody>
+        </table>
+
+        {/* Totals */}
+        <div className="border-t border-border px-4 py-4">
+          <div className="flex justify-end">
+            <div className="w-72 space-y-1.5 text-sm">
+              <div className="flex justify-between">
+                <span className="text-muted">Vahesumma:</span>
+                <span className="font-mono">
+                  {formatMoney(invoice.subtotal)}
+                </span>
+              </div>
+              {invoice.vatRate && invoice.vatAmount && (
+                <div className="flex justify-between">
+                  <span className="text-muted">
+                    KM {parseFloat(invoice.vatRate)}%:
+                  </span>
+                  <span className="font-mono">
+                    {formatMoney(invoice.vatAmount)}
+                  </span>
+                </div>
+              )}
+              <div className="flex justify-between font-semibold text-base pt-2 border-t border-border">
+                <span>KOKKU:</span>
+                <span className="font-mono">
+                  {formatMoney(invoice.total)}
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Payment details */}
+      <div className="bg-white border border-border rounded-xl p-4 mb-6">
+        <h3 className="text-xs text-muted uppercase tracking-wide mb-3">
+          Makserekvisiidid
+        </h3>
+        <div className="grid grid-cols-2 gap-2 text-sm">
+          <span className="text-muted">Saaja:</span>
+          <span className="font-medium">{biz.companyName}</span>
+          <span className="text-muted">IBAN:</span>
+          <span className="font-mono">{biz.iban}</span>
+          <span className="text-muted">Pank:</span>
+          <span>{biz.bankName}</span>
+          <span className="text-muted">Selgitus:</span>
+          <span className="font-mono">{invoice.invoiceNumber}</span>
+        </div>
+      </div>
+
+      {/* Notes */}
+      {invoice.notes && (
+        <div className="bg-white border border-border rounded-xl p-4 mb-6">
+          <h3 className="text-xs text-muted uppercase tracking-wide mb-2">
+            Märkmed
+          </h3>
+          <p className="text-sm">{invoice.notes}</p>
+        </div>
+      )}
+
+      {/* Paid / Cancelled info */}
+      {invoice.paidAt && (
+        <div className="bg-emerald-50 border border-emerald-200 rounded-xl p-4 mb-6">
+          <p className="text-sm text-emerald-800">
+            Makstud: {formatDate(invoice.paidAt)}
+          </p>
+        </div>
+      )}
+      {invoice.cancelledAt && (
+        <div className="bg-gray-50 border border-gray-200 rounded-xl p-4 mb-6">
+          <p className="text-sm text-gray-600">
+            Tühistatud: {formatDate(invoice.cancelledAt)}
+          </p>
+        </div>
+      )}
+
+      {/* Footer info */}
+      <div className="bg-surface border border-border rounded-xl p-4 text-xs text-muted">
+        <p>
+          Reg. nr: {biz.registryCode}
+          {biz.isVatRegistered && biz.kmkrNumber && ` | KMKR: ${biz.kmkrNumber}`}
+        </p>
+        <p>{biz.address} | {biz.email} | {biz.phone}</p>
+      </div>
+    </div>
+  );
+}

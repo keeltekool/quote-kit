@@ -78,6 +78,9 @@
     "overdue": "Overdue",
     "cancelled": "Cancelled",
     "markPaid": "Mark as Paid",
+    "markSent": "Mark as Sent",
+    "cancel": "Cancel Invoice",
+    "seller": "Seller",
     "paymentTerms": "Payment terms",
     "days": "days"
   },

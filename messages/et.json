@@ -78,6 +78,9 @@
     "overdue": "Tähtaja ületanud",
     "cancelled": "Tühistatud",
     "markPaid": "Märgi makstuks",
+    "markSent": "Märgi saadetuks",
+    "cancel": "Tühista arve",
+    "seller": "Müüja",
     "paymentTerms": "Maksetingimused",
     "days": "päeva"
   },
