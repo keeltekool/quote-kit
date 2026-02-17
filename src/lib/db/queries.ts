@@ -28,16 +28,7 @@ export async function getOrCreateCounter(userId: string) {
 }
 
 export async function getNextQuoteNumber(userId: string, prefix: string) {
-  const [counter] = await db
-    .update(invoiceCounters)
-    .set({
-      currentQuoteNumber: invoiceCounters.currentQuoteNumber,
-      updatedAt: new Date(),
-    })
-    .where(eq(invoiceCounters.userId, userId))
-    .returning();
-
-  // Use raw SQL for atomic increment
+  // Atomic increment — no race conditions
   const result = await db.execute(
     `UPDATE invoice_counters SET current_quote_number = current_quote_number + 1, updated_at = NOW() WHERE user_id = '${userId}' RETURNING current_quote_number`
   );
