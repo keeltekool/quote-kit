@@ -12,10 +12,12 @@
     "@anthropic-ai/sdk": "^0.74.0",
     "@clerk/nextjs": "^6.37.4",
     "@neondatabase/serverless": "^1.0.2",
+    "@sparticuz/chromium": "^143.0.4",
     "dotenv": "^17.3.1",
     "drizzle-orm": "^0.45.1",
     "next": "16.1.6",
     "next-intl": "^4.8.3",
+    "puppeteer-core": "^24.37.3",
     "react": "19.2.3",
     "react-dom": "19.2.3"
   },

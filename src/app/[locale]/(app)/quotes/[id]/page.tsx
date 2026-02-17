@@ -59,6 +59,33 @@ export default function QuoteDetailPage() {
     fetchQuote();
   }, [params.id, router]);
 
+  const [exporting, setExporting] = useState(false);
+
+  const handleExportPdf = async () => {
+    if (!quote) return;
+    setExporting(true);
+    try {
+      const res = await fetch("/api/export/pdf", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ documentType: "quote", documentId: quote.id }),
+      });
+      if (!res.ok) throw new Error("PDF failed");
+      const blob = await res.blob();
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = `Pakkumine_${quote.quoteNumber}.pdf`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+    } catch {
+      alert("PDF genereerimine ebaõnnestus");
+    }
+    setExporting(false);
+  };
+
   const handleStatusUpdate = async (status: string) => {
     if (!quote) return;
     await fetch(`/api/quotes/${quote.id}/status`, {
@@ -121,6 +148,13 @@ export default function QuoteDetailPage() {
         </div>
 
         <div className="flex gap-2">
+          <button
+            onClick={handleExportPdf}
+            disabled={exporting}
+            className="px-4 py-2 text-sm font-medium text-blue-600 border border-blue-300 rounded-lg hover:bg-blue-50 disabled:opacity-50"
+          >
+            {exporting ? "..." : "PDF"}
+          </button>
           {quote.status === "draft" && (
             <button
               onClick={() => handleStatusUpdate("sent")}
