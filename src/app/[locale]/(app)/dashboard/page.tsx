@@ -48,20 +48,20 @@ type DashboardData = {
 };
 
 const quoteStatusColors: Record<string, string> = {
-  draft: "bg-gray-100 text-gray-700",
-  sent: "bg-blue-50 text-blue-700",
-  accepted: "bg-emerald-50 text-emerald-700",
-  declined: "bg-red-50 text-red-700",
-  expired: "bg-amber-50 text-amber-700",
-  invoiced: "bg-purple-50 text-purple-700",
+  draft: "bg-gray-100 text-gray-600 border-gray-200",
+  sent: "bg-fjord-50 text-fjord-700 border-fjord-200",
+  accepted: "bg-emerald-50 text-emerald-600 border-emerald-200",
+  declined: "bg-red-50 text-red-600 border-red-200",
+  expired: "bg-amber-50 text-amber-600 border-amber-200",
+  invoiced: "bg-green-50 text-green-600 border-green-200",
 };
 
 const invoiceStatusColors: Record<string, string> = {
-  issued: "bg-blue-50 text-blue-700",
-  sent: "bg-indigo-50 text-indigo-700",
-  paid: "bg-emerald-50 text-emerald-700",
-  overdue: "bg-red-50 text-red-700",
-  cancelled: "bg-gray-100 text-gray-500",
+  issued: "bg-blue-50 text-blue-600 border-blue-200",
+  sent: "bg-fjord-50 text-fjord-700 border-fjord-200",
+  paid: "bg-emerald-50 text-emerald-600 border-emerald-200",
+  overdue: "bg-red-50 text-red-600 border-red-200",
+  cancelled: "bg-gray-100 text-gray-600 border-gray-200",
 };
 
 export default function DashboardPage() {
@@ -118,13 +118,13 @@ export default function DashboardPage() {
         <div className="flex gap-2">
           <button
             onClick={() => router.push("/quotes/new")}
-            className="px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-lg hover:bg-blue-700 transition-colors"
+            className="px-4 py-2 text-sm font-medium bg-fjord-700 text-white rounded-lg hover:bg-fjord-800 transition-colors"
           >
             + {t("dashboard.newQuote")}
           </button>
           <button
             onClick={() => router.push("/invoices/new")}
-            className="px-4 py-2 text-sm font-medium text-blue-600 bg-blue-50 rounded-lg hover:bg-blue-100 transition-colors"
+            className="px-4 py-2 text-sm font-medium bg-white border border-fjord-200 text-fjord-700 rounded-lg hover:bg-fjord-50 transition-colors"
           >
             + {t("dashboard.newInvoice")}
           </button>
@@ -136,39 +136,39 @@ export default function DashboardPage() {
         {/* Total Quotes */}
         <button
           onClick={() => router.push("/quotes")}
-          className="bg-white border border-border rounded-xl p-5 text-left hover:border-blue-300 transition-colors"
+          className="bg-white border border-border rounded-xl p-5 text-left hover:border-fjord-300 transition-colors"
         >
-          <p className="text-xs font-medium text-muted uppercase tracking-wide">
+          <p className="text-[11px] font-semibold text-fjord-600 uppercase tracking-wider">
             {t("dashboard.totalQuotes")}
           </p>
-          <p className="text-2xl font-bold mt-1">{data.quotes.total}</p>
-          <p className="text-xs text-muted mt-1">
+          <p className="text-[28px] font-bold text-fjord-950 leading-none mt-1">{data.quotes.total}</p>
+          <p className="text-[13px] font-medium text-fjord-600 font-mono mt-1">
             {formatMoney(data.quotes.totalValue)}
           </p>
         </button>
 
         {/* Accepted Quotes */}
         <div className="bg-white border border-border rounded-xl p-5">
-          <p className="text-xs font-medium text-muted uppercase tracking-wide">
+          <p className="text-[11px] font-semibold text-fjord-600 uppercase tracking-wider">
             {t("dashboard.acceptedQuotes")}
           </p>
-          <p className="text-2xl font-bold mt-1 text-emerald-600">
+          <p className="text-[28px] font-bold text-fjord-950 leading-none mt-1 text-emerald-600">
             {acceptedQuotes}
           </p>
-          <p className="text-xs text-muted mt-1">
+          <p className="text-[13px] font-medium text-fjord-600 font-mono mt-1">
             {formatMoney(acceptedValue)}
           </p>
         </div>
 
         {/* Pending Payments */}
         <div className="bg-white border border-border rounded-xl p-5">
-          <p className="text-xs font-medium text-muted uppercase tracking-wide">
+          <p className="text-[11px] font-semibold text-fjord-600 uppercase tracking-wider">
             {t("dashboard.pendingPayments")}
           </p>
-          <p className="text-2xl font-bold mt-1 text-amber-600">
+          <p className="text-[28px] font-bold text-fjord-950 leading-none mt-1 text-amber-600">
             {data.invoices.pendingCount}
           </p>
-          <p className="text-xs text-muted mt-1">
+          <p className="text-[13px] font-medium text-fjord-600 font-mono mt-1">
             {formatMoney(data.invoices.pendingPayments)}
           </p>
           {data.invoices.overdueCount > 0 && (
@@ -181,13 +181,13 @@ export default function DashboardPage() {
         {/* Total Invoiced (paid) */}
         <button
           onClick={() => router.push("/invoices")}
-          className="bg-white border border-border rounded-xl p-5 text-left hover:border-blue-300 transition-colors"
+          className="bg-white border border-border rounded-xl p-5 text-left hover:border-fjord-300 transition-colors"
         >
-          <p className="text-xs font-medium text-muted uppercase tracking-wide">
+          <p className="text-[11px] font-semibold text-fjord-600 uppercase tracking-wider">
             {t("dashboard.totalInvoices")}
           </p>
-          <p className="text-2xl font-bold mt-1">{data.invoices.total}</p>
-          <p className="text-xs text-emerald-600 mt-1">
+          <p className="text-[28px] font-bold text-fjord-950 leading-none mt-1">{data.invoices.total}</p>
+          <p className="text-[13px] font-medium text-fjord-600 font-mono mt-1">
             {formatMoney(paidValue)} makstud
           </p>
         </button>
@@ -197,13 +197,13 @@ export default function DashboardPage() {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Recent Quotes */}
         <div className="bg-white border border-border rounded-xl overflow-hidden">
-          <div className="flex items-center justify-between px-5 py-3 border-b border-border bg-surface">
+          <div className="flex items-center justify-between px-5 py-3 border-b border-border bg-fjord-50">
             <h2 className="text-sm font-semibold">
               {t("dashboard.recentQuotes")}
             </h2>
             <button
               onClick={() => router.push("/quotes")}
-              className="text-xs text-blue-600 hover:underline"
+              className="text-xs text-fjord-700 hover:text-fjord-900"
             >
               {t("quotes.title")} &rarr;
             </button>
@@ -214,7 +214,7 @@ export default function DashboardPage() {
               <p>Pakkumisi pole veel loodud.</p>
               <button
                 onClick={() => router.push("/quotes/new")}
-                className="mt-2 text-blue-600 font-medium hover:underline"
+                className="mt-2 text-fjord-700 font-medium hover:text-fjord-900"
               >
                 + {t("dashboard.newQuote")}
               </button>
@@ -225,17 +225,17 @@ export default function DashboardPage() {
                 <button
                   key={q.id}
                   onClick={() => router.push(`/quotes/${q.id}`)}
-                  className="w-full flex items-center justify-between px-5 py-3 border-b border-border last:border-0 hover:bg-surface/50 text-left transition-colors"
+                  className="w-full flex items-center justify-between px-5 py-3 border-b border-fjord-50 last:border-0 hover:bg-fjord-50/50 text-left transition-colors"
                 >
                   <div className="min-w-0 flex-1">
                     <div className="flex items-center gap-2">
-                      <span className="font-mono text-xs font-medium text-blue-600">
+                      <span className="font-mono text-sm font-medium text-fjord-700">
                         {q.quoteNumber}
                       </span>
                       <span
-                        className={`inline-block px-1.5 py-0.5 rounded text-[10px] font-medium ${
+                        className={`inline-block px-1.5 py-0.5 rounded-full border text-[10px] font-medium ${
                           quoteStatusColors[q.status] ||
-                          "bg-gray-100 text-gray-700"
+                          "bg-gray-100 text-gray-600 border-gray-200"
                         }`}
                       >
                         {t(`quotes.${q.status}`)}
@@ -246,10 +246,10 @@ export default function DashboardPage() {
                     </p>
                   </div>
                   <div className="text-right ml-3 shrink-0">
-                    <p className="font-mono text-sm font-medium">
+                    <p className="font-mono font-semibold text-sm text-fjord-950">
                       {formatMoney(q.total)}
                     </p>
-                    <p className="text-[10px] text-muted">
+                    <p className="font-mono text-[13px] text-fjord-600">
                       {formatDate(q.createdAt)}
                     </p>
                   </div>
@@ -261,13 +261,13 @@ export default function DashboardPage() {
 
         {/* Recent Invoices */}
         <div className="bg-white border border-border rounded-xl overflow-hidden">
-          <div className="flex items-center justify-between px-5 py-3 border-b border-border bg-surface">
+          <div className="flex items-center justify-between px-5 py-3 border-b border-border bg-fjord-50">
             <h2 className="text-sm font-semibold">
               {t("dashboard.recentInvoices")}
             </h2>
             <button
               onClick={() => router.push("/invoices")}
-              className="text-xs text-blue-600 hover:underline"
+              className="text-xs text-fjord-700 hover:text-fjord-900"
             >
               {t("invoices.title")} &rarr;
             </button>
@@ -278,7 +278,7 @@ export default function DashboardPage() {
               <p>Arveid pole veel loodud.</p>
               <button
                 onClick={() => router.push("/invoices/new")}
-                className="mt-2 text-blue-600 font-medium hover:underline"
+                className="mt-2 text-fjord-700 font-medium hover:text-fjord-900"
               >
                 + {t("dashboard.newInvoice")}
               </button>
@@ -289,19 +289,19 @@ export default function DashboardPage() {
                 <button
                   key={inv.id}
                   onClick={() => router.push(`/invoices/${inv.id}`)}
-                  className="w-full flex items-center justify-between px-5 py-3 border-b border-border last:border-0 hover:bg-surface/50 text-left transition-colors"
+                  className="w-full flex items-center justify-between px-5 py-3 border-b border-fjord-50 last:border-0 hover:bg-fjord-50/50 text-left transition-colors"
                 >
                   <div className="min-w-0 flex-1">
                     <div className="flex items-center gap-2">
-                      <span className="font-mono text-xs font-medium text-blue-600">
+                      <span className="font-mono text-sm font-medium text-fjord-700">
                         {inv.invoiceNumber}
                       </span>
                       <span
-                        className={`inline-block px-1.5 py-0.5 rounded text-[10px] font-medium ${
+                        className={`inline-block px-1.5 py-0.5 rounded-full border text-[10px] font-medium ${
                           isOverdue(inv)
-                            ? "bg-red-50 text-red-700"
+                            ? "bg-red-50 text-red-600 border-red-200"
                             : invoiceStatusColors[inv.status] ||
-                              "bg-gray-100 text-gray-700"
+                              "bg-gray-100 text-gray-600 border-gray-200"
                         }`}
                       >
                         {isOverdue(inv)
@@ -314,10 +314,10 @@ export default function DashboardPage() {
                     </p>
                   </div>
                   <div className="text-right ml-3 shrink-0">
-                    <p className="font-mono text-sm font-medium">
+                    <p className="font-mono font-semibold text-sm text-fjord-950">
                       {formatMoney(inv.total)}
                     </p>
-                    <p className="text-[10px] text-muted">
+                    <p className="font-mono text-[13px] text-fjord-600">
                       {formatDate(inv.invoiceDate)}
                     </p>
                   </div>

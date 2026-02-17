@@ -204,7 +204,7 @@ export default function EditQuotePage() {
               onChange={(e) =>
                 setValidityDays(parseInt(e.target.value) || 14)
               }
-              className="w-full rounded-lg border border-border px-3 py-2 text-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none"
+              className="w-full rounded-lg border border-border px-3 py-2 text-sm focus:border-fjord-700 focus:ring-2 focus:ring-fjord-700/20 outline-none"
             />
           </div>
           <div>
@@ -219,7 +219,7 @@ export default function EditQuotePage() {
               onChange={(e) =>
                 setPaymentTermsDays(parseInt(e.target.value) || 14)
               }
-              className="w-full rounded-lg border border-border px-3 py-2 text-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none"
+              className="w-full rounded-lg border border-border px-3 py-2 text-sm focus:border-fjord-700 focus:ring-2 focus:ring-fjord-700/20 outline-none"
             />
           </div>
           <div>
@@ -229,7 +229,7 @@ export default function EditQuotePage() {
             <input
               value={notes}
               onChange={(e) => setNotes(e.target.value)}
-              className="w-full rounded-lg border border-border px-3 py-2 text-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none"
+              className="w-full rounded-lg border border-border px-3 py-2 text-sm focus:border-fjord-700 focus:ring-2 focus:ring-fjord-700/20 outline-none"
               placeholder="Lisainfo..."
             />
           </div>
@@ -242,7 +242,7 @@ export default function EditQuotePage() {
           <h2 className="text-sm font-semibold">Pakkumise read</h2>
           <button
             onClick={addLineItem}
-            className="text-sm text-blue-600 font-medium hover:underline"
+            className="text-sm text-fjord-700 font-medium hover:underline"
           >
             + {t("quotes.addLineItem")}
           </button>
@@ -257,7 +257,7 @@ export default function EditQuotePage() {
                 <button
                   key={s.id}
                   onClick={() => addFromCatalog(s)}
-                  className="px-2 py-1 text-xs rounded border border-border text-muted hover:text-foreground hover:bg-surface transition-colors"
+                  className="px-2 py-1 text-xs rounded border border-border text-muted hover:text-fjord-700 hover:bg-fjord-50 transition-colors"
                 >
                   {s.nameEt} — &euro;{parseFloat(s.unitPrice).toFixed(2)}
                 </button>
@@ -271,7 +271,7 @@ export default function EditQuotePage() {
             <p>Lisa pakkumise read.</p>
             <button
               onClick={addLineItem}
-              className="mt-1 text-blue-600 font-medium hover:underline"
+              className="mt-1 text-fjord-700 font-medium hover:underline"
             >
               + {t("quotes.addLineItem")}
             </button>
@@ -290,7 +290,7 @@ export default function EditQuotePage() {
                       onChange={(e) =>
                         updateLineItem(i, { description: e.target.value })
                       }
-                      className="w-full rounded border border-border px-2 py-1.5 text-sm outline-none focus:border-blue-500"
+                      className="w-full rounded border border-border px-2 py-1.5 text-sm outline-none focus:border-fjord-700"
                     />
                   </div>
                   <div className="md:col-span-1">
@@ -307,7 +307,7 @@ export default function EditQuotePage() {
                           quantity: parseFloat(e.target.value) || 0,
                         })
                       }
-                      className="w-full rounded border border-border px-2 py-1.5 text-sm outline-none focus:border-blue-500"
+                      className="w-full rounded border border-border px-2 py-1.5 text-sm outline-none focus:border-fjord-700"
                     />
                   </div>
                   <div className="md:col-span-1">
@@ -319,7 +319,7 @@ export default function EditQuotePage() {
                       onChange={(e) =>
                         updateLineItem(i, { unit: e.target.value })
                       }
-                      className="w-full rounded border border-border px-2 py-1.5 text-sm outline-none focus:border-blue-500"
+                      className="w-full rounded border border-border px-2 py-1.5 text-sm outline-none focus:border-fjord-700"
                     >
                       <option value="h">h</option>
                       <option value="m²">m²</option>
@@ -343,7 +343,7 @@ export default function EditQuotePage() {
                           unitPrice: parseFloat(e.target.value) || 0,
                         })
                       }
-                      className="w-full rounded border border-border px-2 py-1.5 text-sm outline-none focus:border-blue-500"
+                      className="w-full rounded border border-border px-2 py-1.5 text-sm outline-none focus:border-fjord-700"
                     />
                   </div>
                   <div className="md:col-span-2">
@@ -402,7 +402,7 @@ export default function EditQuotePage() {
         <button
           onClick={handleSave}
           disabled={saving || lineItems.length === 0}
-          className="px-6 py-2.5 text-sm font-medium text-white bg-blue-600 rounded-lg hover:bg-blue-700 disabled:opacity-50 transition-colors"
+          className="px-6 py-2.5 text-sm font-medium text-white bg-fjord-700 rounded-lg hover:bg-fjord-800 disabled:opacity-50 transition-colors"
         >
           {saving ? t("common.loading") : t("common.save")}
         </button>

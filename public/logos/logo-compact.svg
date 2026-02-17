@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="160" height="36" viewBox="0 0 160 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect x="2" y="2" width="24" height="32" rx="6" fill="rgba(58,80,96,0.05)" stroke="#3A5060" stroke-width="2"/>
+  <line x1="9" y1="11" x2="19" y2="11" stroke="#546A7B" stroke-width="1.5" stroke-linecap="round" opacity="0.35"/>
+  <line x1="9" y1="17" x2="15" y2="17" stroke="#546A7B" stroke-width="1.5" stroke-linecap="round" opacity="0.35"/>
+  <path d="M9 23L12.5 26.5L19 20" stroke="#3A5060" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="34" y="25" font-family="Inter, -apple-system, sans-serif" font-size="19" font-weight="600" letter-spacing="-0.3">
+    <tspan fill="#1C2B33">Quote</tspan><tspan fill="#3A5060">Kit</tspan>
+  </text>
+</svg>

@@ -28,11 +28,11 @@ type Invoice = {
 };
 
 const statusColors: Record<string, string> = {
-  issued: "bg-blue-50 text-blue-700",
-  sent: "bg-indigo-50 text-indigo-700",
-  paid: "bg-emerald-50 text-emerald-700",
-  overdue: "bg-red-50 text-red-700",
-  cancelled: "bg-gray-100 text-gray-500",
+  issued: "bg-blue-50 text-blue-600 border-blue-200",
+  sent: "bg-fjord-50 text-fjord-700 border-fjord-200",
+  paid: "bg-emerald-50 text-emerald-600 border-emerald-200",
+  overdue: "bg-red-50 text-red-600 border-red-200",
+  cancelled: "bg-gray-100 text-gray-500 border-gray-200",
 };
 
 export default function InvoiceDetailPage() {
@@ -176,17 +176,17 @@ export default function InvoiceDetailPage() {
         <div>
           <button
             onClick={() => router.push("/invoices")}
-            className="text-sm text-muted hover:text-foreground mb-2 inline-block"
+            className="text-sm text-fjord-600 hover:text-fjord-700 mb-2 inline-block"
           >
             &larr; {t("invoices.title")}
           </button>
           <h1 className="text-2xl font-bold flex items-center gap-3">
-            {invoice.invoiceNumber}
+            <span className="font-mono">{invoice.invoiceNumber}</span>
             <span
-              className={`text-sm px-2.5 py-1 rounded ${
+              className={`text-sm px-2.5 py-1 rounded-full border ${
                 isOverdue
                   ? statusColors.overdue
-                  : statusColors[invoice.status] || "bg-gray-100"
+                  : statusColors[invoice.status] || "bg-gray-100 border-gray-200"
               }`}
             >
               {isOverdue ? t("invoices.overdue") : t(`invoices.${invoice.status}`)}
@@ -203,19 +203,19 @@ export default function InvoiceDetailPage() {
           <button
             onClick={handleExportPdf}
             disabled={exporting}
-            className="px-4 py-2 text-sm font-medium text-blue-600 border border-blue-300 rounded-lg hover:bg-blue-50 disabled:opacity-50"
+            className="px-4 py-2 text-sm font-medium text-fjord-700 border border-fjord-200 rounded-lg hover:bg-fjord-50 disabled:opacity-50"
           >
             {exporting ? "..." : "PDF"}
           </button>
           <button
             onClick={() => handleShare("whatsapp")}
-            className="px-3 py-2 text-sm text-muted border border-border rounded-lg hover:bg-surface"
+            className="px-3 py-2 text-sm text-fjord-600 border border-border rounded-lg hover:bg-fjord-50"
           >
             WhatsApp
           </button>
           <button
             onClick={() => handleShare("email")}
-            className="px-3 py-2 text-sm text-muted border border-border rounded-lg hover:bg-surface"
+            className="px-3 py-2 text-sm text-fjord-600 border border-border rounded-lg hover:bg-fjord-50"
           >
             E-post
           </button>
@@ -230,7 +230,7 @@ export default function InvoiceDetailPage() {
           {invoice.status === "issued" && (
             <button
               onClick={() => handleStatusUpdate("sent")}
-              className="px-4 py-2 text-sm font-medium text-blue-600 border border-blue-300 rounded-lg hover:bg-blue-50"
+              className="px-4 py-2 text-sm font-medium text-fjord-700 border border-fjord-200 rounded-lg hover:bg-fjord-50"
             >
               {t("invoices.markSent")}
             </button>
@@ -252,7 +252,7 @@ export default function InvoiceDetailPage() {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
         {/* Seller */}
         <div className="bg-white border border-border rounded-xl p-4">
-          <h3 className="text-xs text-muted uppercase tracking-wide mb-2">
+          <h3 className="text-[11px] font-semibold text-fjord-600 uppercase tracking-wider mb-2">
             {t("invoices.seller")}
           </h3>
           <p className="font-semibold">{biz.companyName}</p>
@@ -269,7 +269,7 @@ export default function InvoiceDetailPage() {
 
         {/* Client */}
         <div className="bg-white border border-border rounded-xl p-4">
-          <h3 className="text-xs text-muted uppercase tracking-wide mb-2">
+          <h3 className="text-[11px] font-semibold text-fjord-600 uppercase tracking-wider mb-2">
             {t("invoices.client")}
           </h3>
           <p className="font-semibold">{invoice.clientSnapshot.name}</p>
@@ -298,23 +298,23 @@ export default function InvoiceDetailPage() {
       <div className="bg-white border border-border rounded-xl p-4 mb-6">
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
           <div>
-            <span className="text-xs text-muted block">Arve kuupäev</span>
-            <span className="font-medium">{formatDate(invoice.invoiceDate)}</span>
+            <span className="text-[11px] font-semibold text-fjord-600 uppercase tracking-wider block">Arve kuupäev</span>
+            <span className="font-medium font-mono">{formatDate(invoice.invoiceDate)}</span>
           </div>
           {invoice.serviceDate && (
             <div>
-              <span className="text-xs text-muted block">
+              <span className="text-[11px] font-semibold text-fjord-600 uppercase tracking-wider block">
                 {t("invoices.serviceDate")}
               </span>
-              <span className="font-medium">
+              <span className="font-medium font-mono">
                 {formatDate(invoice.serviceDate)}
               </span>
             </div>
           )}
           <div>
-            <span className="text-xs text-muted block">Maksetähtaeg</span>
+            <span className="text-[11px] font-semibold text-fjord-600 uppercase tracking-wider block">Maksetähtaeg</span>
             <span
-              className={`font-medium ${
+              className={`font-medium font-mono ${
                 isOverdue ? "text-red-600" : ""
               }`}
             >
@@ -322,7 +322,7 @@ export default function InvoiceDetailPage() {
             </span>
           </div>
           <div>
-            <span className="text-xs text-muted block">Maksetingimused</span>
+            <span className="text-[11px] font-semibold text-fjord-600 uppercase tracking-wider block">Maksetingimused</span>
             <span className="font-medium">
               {invoice.paymentTermsDays} päeva
             </span>
@@ -334,30 +334,30 @@ export default function InvoiceDetailPage() {
       <div className="bg-white border border-border rounded-xl overflow-hidden mb-6">
         <table className="w-full text-sm">
           <thead>
-            <tr className="border-b border-border bg-surface">
-              <th className="text-left px-4 py-2.5 font-medium w-8">Nr</th>
-              <th className="text-left px-4 py-2.5 font-medium">Kirjeldus</th>
-              <th className="text-right px-4 py-2.5 font-medium">Kogus</th>
-              <th className="text-center px-4 py-2.5 font-medium">Ühik</th>
-              <th className="text-right px-4 py-2.5 font-medium">Ühikuhind</th>
-              <th className="text-right px-4 py-2.5 font-medium">Kokku</th>
+            <tr className="border-b border-border bg-fjord-50">
+              <th className="text-left px-4 py-2.5 text-[13px] font-semibold text-fjord-600 uppercase tracking-wide w-8">Nr</th>
+              <th className="text-left px-4 py-2.5 text-[13px] font-semibold text-fjord-600 uppercase tracking-wide">Kirjeldus</th>
+              <th className="text-right px-4 py-2.5 text-[13px] font-semibold text-fjord-600 uppercase tracking-wide">Kogus</th>
+              <th className="text-center px-4 py-2.5 text-[13px] font-semibold text-fjord-600 uppercase tracking-wide">Ühik</th>
+              <th className="text-right px-4 py-2.5 text-[13px] font-semibold text-fjord-600 uppercase tracking-wide">Ühikuhind</th>
+              <th className="text-right px-4 py-2.5 text-[13px] font-semibold text-fjord-600 uppercase tracking-wide">Kokku</th>
             </tr>
           </thead>
           <tbody>
             {/* Labor items */}
             {labor.length > 0 && (
               <>
-                <tr className="bg-surface/30">
+                <tr className="bg-fjord-50/50">
                   <td
                     colSpan={6}
-                    className="px-4 py-1.5 text-xs text-muted uppercase tracking-wide font-medium"
+                    className="px-4 py-1.5 text-[11px] font-bold text-fjord-600 uppercase tracking-wide"
                   >
                     Tööd
                   </td>
                 </tr>
                 {labor.map((item, i) => (
-                  <tr key={`l-${i}`} className="border-b border-border">
-                    <td className="px-4 py-2.5 text-muted">{i + 1}</td>
+                  <tr key={`l-${i}`} className="border-b border-fjord-50">
+                    <td className="px-4 py-2.5 text-fjord-600">{i + 1}</td>
                     <td className="px-4 py-2.5">{item.description}</td>
                     <td className="px-4 py-2.5 text-right font-mono">
                       {item.quantity}
@@ -377,17 +377,17 @@ export default function InvoiceDetailPage() {
             {/* Material items */}
             {materials.length > 0 && (
               <>
-                <tr className="bg-surface/30">
+                <tr className="bg-fjord-50/50">
                   <td
                     colSpan={6}
-                    className="px-4 py-1.5 text-xs text-muted uppercase tracking-wide font-medium"
+                    className="px-4 py-1.5 text-[11px] font-bold text-fjord-600 uppercase tracking-wide"
                   >
                     Materjalid
                   </td>
                 </tr>
                 {materials.map((item, i) => (
-                  <tr key={`m-${i}`} className="border-b border-border">
-                    <td className="px-4 py-2.5 text-muted">
+                  <tr key={`m-${i}`} className="border-b border-fjord-50">
+                    <td className="px-4 py-2.5 text-fjord-600">
                       {labor.length + i + 1}
                     </td>
                     <td className="px-4 py-2.5">{item.description}</td>
@@ -410,8 +410,8 @@ export default function InvoiceDetailPage() {
             {labor.length === 0 &&
               materials.length === 0 &&
               invoice.lineItems.map((item, i) => (
-                <tr key={i} className="border-b border-border">
-                  <td className="px-4 py-2.5 text-muted">{i + 1}</td>
+                <tr key={i} className="border-b border-fjord-50">
+                  <td className="px-4 py-2.5 text-fjord-600">{i + 1}</td>
                   <td className="px-4 py-2.5">{item.description}</td>
                   <td className="px-4 py-2.5 text-right font-mono">
                     {item.quantity}
@@ -448,9 +448,9 @@ export default function InvoiceDetailPage() {
                   </span>
                 </div>
               )}
-              <div className="flex justify-between font-semibold text-base pt-2 border-t border-border">
+              <div className="flex justify-between font-semibold font-mono text-base pt-2 border-t-2 border-fjord-100">
                 <span>KOKKU:</span>
-                <span className="font-mono">
+                <span>
                   {formatMoney(invoice.total)}
                 </span>
               </div>
@@ -461,7 +461,7 @@ export default function InvoiceDetailPage() {
 
       {/* Payment details */}
       <div className="bg-white border border-border rounded-xl p-4 mb-6">
-        <h3 className="text-xs text-muted uppercase tracking-wide mb-3">
+        <h3 className="text-[11px] font-semibold text-fjord-600 uppercase tracking-wider mb-3">
           Makserekvisiidid
         </h3>
         <div className="grid grid-cols-2 gap-2 text-sm">
@@ -478,8 +478,8 @@ export default function InvoiceDetailPage() {
 
       {/* Notes */}
       {invoice.notes && (
-        <div className="bg-white border border-border rounded-xl p-4 mb-6">
-          <h3 className="text-xs text-muted uppercase tracking-wide mb-2">
+        <div className="bg-amber-50/50 border border-amber-100 rounded-xl p-4 mb-6">
+          <h3 className="text-[11px] font-semibold text-fjord-600 uppercase tracking-wider mb-2">
             Märkmed
           </h3>
           <p className="text-sm">{invoice.notes}</p>
@@ -503,7 +503,7 @@ export default function InvoiceDetailPage() {
       )}
 
       {/* Footer info */}
-      <div className="bg-surface border border-border rounded-xl p-4 text-xs text-muted">
+      <div className="bg-fjord-50 border border-border rounded-xl p-4 text-xs text-muted">
         <p>
           Reg. nr: {biz.registryCode}
           {biz.isVatRegistered && biz.kmkrNumber && ` | KMKR: ${biz.kmkrNumber}`}

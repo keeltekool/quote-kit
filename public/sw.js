@@ -1,5 +1,5 @@
 // QuoteKit Service Worker — basic offline indicator support
-const CACHE_NAME = "quotekit-v1";
+const CACHE_NAME = "quotekit-v2";
 
 // Cache only essential static assets on install
 self.addEventListener("install", (event) => {

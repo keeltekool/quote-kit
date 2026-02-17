@@ -3,6 +3,17 @@
 import { useState } from "react";
 import { useTranslations } from "next-intl";
 import { Link, usePathname } from "@/i18n/routing";
+import { QuoteKitLogo } from "@/components/quotekit-logo";
+
+// Same color-coding as desktop sidebar
+const sectionStyles: Record<string, string> = {
+  dashboard: "bg-[#EDF2F5] text-fjord-700 font-semibold",
+  quotes:    "bg-cyan-50 text-cyan-600 font-semibold",
+  invoices:  "bg-[#F5F3F7] text-[#6B5B73] font-semibold",
+  clients:   "bg-emerald-50 text-emerald-600 font-semibold",
+  services:  "bg-[#FBF8F1] text-[#92702D] font-semibold",
+  settings:  "bg-[#F0F3F5] text-fjord-600 font-semibold",
+};
 
 const navItems = [
   { key: "dashboard", href: "/dashboard" as const },
@@ -21,10 +32,10 @@ export function MobileNav() {
   return (
     <div className="lg:hidden">
       <div className="flex items-center justify-between border-b border-border px-4 py-3 bg-white">
-        <h1 className="text-lg font-bold">QuoteKit</h1>
+        <QuoteKitLogo variant="compact" />
         <button
           onClick={() => setOpen(!open)}
-          className="p-2 rounded-md hover:bg-surface"
+          className="p-2 rounded-md hover:bg-fjord-50 text-fjord-600"
           aria-label="Toggle menu"
         >
           <svg
@@ -32,7 +43,7 @@ export function MobileNav() {
             fill="none"
             viewBox="0 0 24 24"
             stroke="currentColor"
-            strokeWidth={2}
+            strokeWidth={1.75}
           >
             {open ? (
               <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
@@ -44,7 +55,7 @@ export function MobileNav() {
       </div>
 
       {open && (
-        <nav className="border-b border-border bg-white px-4 py-2 space-y-1">
+        <nav className="border-b border-border bg-white px-3 py-2 space-y-0.5">
           {navItems.map((item) => {
             const isActive = pathname.startsWith(item.href);
             return (
@@ -52,10 +63,10 @@ export function MobileNav() {
                 key={item.key}
                 href={item.href}
                 onClick={() => setOpen(false)}
-                className={`block rounded-lg px-3 py-2 text-sm font-medium transition-colors ${
+                className={`block rounded-lg px-3 py-2.5 text-sm font-medium transition-colors ${
                   isActive
-                    ? "bg-blue-50 text-blue-700"
-                    : "text-muted hover:bg-surface hover:text-foreground"
+                    ? sectionStyles[item.key] || "bg-fjord-50 text-fjord-700 font-semibold"
+                    : "text-fjord-600 hover:bg-gray-50"
                 }`}
               >
                 {t(item.key)}

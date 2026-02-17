@@ -279,7 +279,7 @@ export default function NewQuotePage() {
           <div
             key={s}
             className={`flex-1 h-1.5 rounded-full ${
-              s <= step ? "bg-blue-600" : "bg-border"
+              s <= step ? "bg-fjord-700" : "bg-border"
             }`}
           />
         ))}
@@ -297,7 +297,7 @@ export default function NewQuotePage() {
               <p>Lisa esmalt klient.</p>
               <button
                 onClick={() => router.push("/clients")}
-                className="mt-2 text-blue-600 font-medium hover:underline"
+                className="mt-2 text-fjord-700 font-medium hover:underline"
               >
                 + {t("clients.new")}
               </button>
@@ -311,7 +311,7 @@ export default function NewQuotePage() {
                     onClick={() => setSelectedClientId(c.id)}
                     className={`w-full text-left px-4 py-3 rounded-lg border transition-colors ${
                       selectedClientId === c.id
-                        ? "border-blue-500 bg-blue-50"
+                        ? "border-fjord-700 bg-fjord-50"
                         : "border-border hover:bg-surface"
                     }`}
                   >
@@ -338,7 +338,7 @@ export default function NewQuotePage() {
                 <button
                   onClick={() => setStep(2)}
                   disabled={!selectedClientId}
-                  className="px-6 py-2 text-sm font-medium text-white bg-blue-600 rounded-lg hover:bg-blue-700 disabled:opacity-50 transition-colors"
+                  className="px-6 py-2 text-sm font-medium text-white bg-fjord-700 rounded-lg hover:bg-fjord-800 disabled:opacity-50 transition-colors"
                 >
                   {t("common.next")}
                 </button>
@@ -360,7 +360,7 @@ export default function NewQuotePage() {
               value={jobDescription}
               onChange={(e) => setJobDescription(e.target.value)}
               rows={4}
-              className="w-full rounded-lg border border-border px-3 py-2 text-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none resize-none"
+              className="w-full rounded-lg border border-border px-3 py-2 text-sm focus:border-fjord-700 focus:ring-2 focus:ring-fjord-700/20 outline-none resize-none"
               placeholder={t("quotes.describeJobPlaceholder")}
             />
 
@@ -382,7 +382,7 @@ export default function NewQuotePage() {
                           onClick={() => toggleService(s.id)}
                           className={`px-3 py-1.5 text-xs rounded-lg border transition-colors ${
                             selectedServiceIds.includes(s.id)
-                              ? "border-blue-500 bg-blue-50 text-blue-700"
+                              ? "border-fjord-700 bg-fjord-50 text-fjord-700"
                               : "border-border text-muted hover:text-foreground"
                           }`}
                         >
@@ -408,7 +408,7 @@ export default function NewQuotePage() {
               {selectedServiceIds.length > 0 && !jobDescription.trim() && (
                 <button
                   onClick={addServicesDirectly}
-                  className="px-4 py-2 text-sm font-medium text-blue-600 border border-blue-600 rounded-lg hover:bg-blue-50 transition-colors"
+                  className="px-4 py-2 text-sm font-medium text-fjord-700 border border-fjord-700 rounded-lg hover:bg-fjord-50 transition-colors"
                 >
                   Lisa {selectedServiceIds.length} teenust →
                 </button>
@@ -417,7 +417,7 @@ export default function NewQuotePage() {
               <button
                 onClick={handleGenerate}
                 disabled={generating || !jobDescription.trim()}
-                className="px-6 py-2 text-sm font-medium text-white bg-blue-600 rounded-lg hover:bg-blue-700 disabled:opacity-50 transition-colors"
+                className="px-6 py-2 text-sm font-medium text-white bg-fjord-700 rounded-lg hover:bg-fjord-800 disabled:opacity-50 transition-colors"
               >
                 {generating
                   ? t("quotes.generating")
@@ -427,7 +427,7 @@ export default function NewQuotePage() {
 
             {/* AI thinking indicator */}
             {aiThinking && (
-              <div className="mt-4 p-3 bg-blue-50 rounded-lg text-sm text-blue-700 animate-pulse">
+              <div className="mt-4 p-3 bg-fjord-50 rounded-lg text-sm text-fjord-700 animate-pulse">
                 {aiThinking}
               </div>
             )}
@@ -438,7 +438,7 @@ export default function NewQuotePage() {
                 {lineItems.map((item, i) => (
                   <div
                     key={i}
-                    className="p-3 bg-surface rounded-lg text-sm flex justify-between animate-fade-in"
+                    className="p-3 bg-fjord-50 rounded-lg text-sm flex justify-between animate-fade-in"
                   >
                     <span>{item.description}</span>
                     <span className="font-mono">
@@ -460,7 +460,7 @@ export default function NewQuotePage() {
               <h2 className="text-lg font-semibold">3. Pakkumise read</h2>
               <button
                 onClick={addLineItem}
-                className="text-sm text-blue-600 font-medium hover:underline"
+                className="text-sm text-fjord-700 font-medium hover:underline"
               >
                 + {t("quotes.addLineItem")}
               </button>
@@ -471,7 +471,7 @@ export default function NewQuotePage() {
                 <p>Lisa pakkumise read.</p>
                 <button
                   onClick={addLineItem}
-                  className="mt-2 text-blue-600 font-medium hover:underline"
+                  className="mt-2 text-fjord-700 font-medium hover:underline"
                 >
                   + {t("quotes.addLineItem")}
                 </button>
@@ -496,7 +496,7 @@ export default function NewQuotePage() {
                               description: e.target.value,
                             })
                           }
-                          className="w-full rounded border border-border px-2 py-1.5 text-sm outline-none focus:border-blue-500"
+                          className="w-full rounded border border-border px-2 py-1.5 text-sm outline-none focus:border-fjord-700"
                         />
                       </div>
 
@@ -515,7 +515,7 @@ export default function NewQuotePage() {
                               quantity: parseFloat(e.target.value) || 0,
                             })
                           }
-                          className="w-full rounded border border-border px-2 py-1.5 text-sm outline-none focus:border-blue-500"
+                          className="w-full rounded border border-border px-2 py-1.5 text-sm outline-none focus:border-fjord-700"
                         />
                       </div>
 
@@ -529,7 +529,7 @@ export default function NewQuotePage() {
                           onChange={(e) =>
                             updateLineItem(i, { unit: e.target.value })
                           }
-                          className="w-full rounded border border-border px-2 py-1.5 text-sm outline-none focus:border-blue-500"
+                          className="w-full rounded border border-border px-2 py-1.5 text-sm outline-none focus:border-fjord-700"
                         >
                           <option value="h">h</option>
                           <option value="m²">m²</option>
@@ -555,7 +555,7 @@ export default function NewQuotePage() {
                               unitPrice: parseFloat(e.target.value) || 0,
                             })
                           }
-                          className="w-full rounded border border-border px-2 py-1.5 text-sm outline-none focus:border-blue-500"
+                          className="w-full rounded border border-border px-2 py-1.5 text-sm outline-none focus:border-fjord-700"
                         />
                       </div>
 
@@ -636,7 +636,7 @@ export default function NewQuotePage() {
               value={notes || aiNotes}
               onChange={(e) => setNotes(e.target.value)}
               rows={2}
-              className="w-full rounded-lg border border-border px-3 py-2 text-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none resize-none"
+              className="w-full rounded-lg border border-border px-3 py-2 text-sm focus:border-fjord-700 focus:ring-2 focus:ring-fjord-700/20 outline-none resize-none"
               placeholder="Lisainfo, tähelepanekud..."
             />
           </div>
@@ -653,7 +653,7 @@ export default function NewQuotePage() {
             <button
               onClick={handleSave}
               disabled={saving || lineItems.length === 0}
-              className="px-6 py-2.5 text-sm font-medium text-white bg-blue-600 rounded-lg hover:bg-blue-700 disabled:opacity-50 transition-colors"
+              className="px-6 py-2.5 text-sm font-medium text-white bg-fjord-700 rounded-lg hover:bg-fjord-800 disabled:opacity-50 transition-colors"
             >
               {saving ? t("common.loading") : t("common.save")}
             </button>

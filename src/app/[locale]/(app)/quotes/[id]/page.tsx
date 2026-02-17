@@ -29,13 +29,13 @@ type Quote = {
 };
 
 const statusColors: Record<string, string> = {
-  draft: "bg-gray-100 text-gray-700",
-  sent: "bg-blue-50 text-blue-700",
-  viewed: "bg-indigo-50 text-indigo-700",
-  accepted: "bg-emerald-50 text-emerald-700",
-  declined: "bg-red-50 text-red-700",
-  expired: "bg-amber-50 text-amber-700",
-  invoiced: "bg-purple-50 text-purple-700",
+  draft: "bg-gray-100 text-gray-600 border-gray-200",
+  sent: "bg-fjord-50 text-fjord-700 border-fjord-200",
+  viewed: "bg-blue-50 text-blue-600 border-blue-200",
+  accepted: "bg-emerald-50 text-emerald-600 border-emerald-200",
+  declined: "bg-red-50 text-red-600 border-red-200",
+  expired: "bg-amber-50 text-amber-600 border-amber-200",
+  invoiced: "bg-green-50 text-green-600 border-green-200",
 };
 
 export default function QuoteDetailPage() {
@@ -194,15 +194,15 @@ export default function QuoteDetailPage() {
         <div>
           <button
             onClick={() => router.push("/quotes")}
-            className="text-sm text-muted hover:text-foreground mb-2 inline-block"
+            className="text-sm text-fjord-600 hover:text-fjord-700 mb-2 inline-block"
           >
             ← {t("quotes.title")}
           </button>
           <h1 className="text-2xl font-bold flex items-center gap-3">
-            {quote.quoteNumber}
+            <span className="font-mono">{quote.quoteNumber}</span>
             <span
-              className={`text-sm px-2.5 py-1 rounded ${
-                statusColors[quote.status] || "bg-gray-100"
+              className={`text-sm px-2.5 py-1 rounded-full border ${
+                statusColors[quote.status] || "bg-gray-100 border-gray-200"
               }`}
             >
               {t(`quotes.${quote.status}`)}
@@ -214,20 +214,20 @@ export default function QuoteDetailPage() {
           <button
             onClick={handleExportPdf}
             disabled={exporting}
-            className="px-4 py-2 text-sm font-medium text-blue-600 border border-blue-300 rounded-lg hover:bg-blue-50 disabled:opacity-50"
+            className="px-4 py-2 text-sm font-medium text-fjord-700 border border-fjord-200 rounded-lg hover:bg-fjord-50 disabled:opacity-50"
           >
             {exporting ? "..." : "PDF"}
           </button>
           <button
             onClick={() => handleShare("whatsapp")}
-            className="px-3 py-2 text-sm text-muted border border-border rounded-lg hover:bg-surface"
+            className="px-3 py-2 text-sm text-fjord-600 border border-border rounded-lg hover:bg-fjord-50"
             title="WhatsApp"
           >
             WhatsApp
           </button>
           <button
             onClick={() => handleShare("email")}
-            className="px-3 py-2 text-sm text-muted border border-border rounded-lg hover:bg-surface"
+            className="px-3 py-2 text-sm text-fjord-600 border border-border rounded-lg hover:bg-fjord-50"
             title="Email"
           >
             E-post
@@ -235,7 +235,7 @@ export default function QuoteDetailPage() {
           <button
             onClick={handleDuplicate}
             disabled={duplicating}
-            className="px-3 py-2 text-sm text-muted border border-border rounded-lg hover:bg-surface disabled:opacity-50"
+            className="px-3 py-2 text-sm text-fjord-600 border border-border rounded-lg hover:bg-fjord-50 disabled:opacity-50"
           >
             {duplicating ? "..." : t("quotes.duplicate")}
           </button>
@@ -243,13 +243,13 @@ export default function QuoteDetailPage() {
             <>
               <button
                 onClick={() => router.push(`/quotes/${quote.id}/edit`)}
-                className="px-4 py-2 text-sm font-medium text-blue-600 border border-blue-300 rounded-lg hover:bg-blue-50"
+                className="px-4 py-2 text-sm font-medium text-fjord-700 border border-fjord-200 rounded-lg hover:bg-fjord-50"
               >
                 {t("common.edit")}
               </button>
               <button
                 onClick={() => handleStatusUpdate("sent")}
-                className="px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-lg hover:bg-blue-700"
+                className="px-4 py-2 text-sm font-medium text-white bg-fjord-700 rounded-lg hover:bg-fjord-800"
               >
                 {t("quotes.send")}
               </button>
@@ -286,7 +286,7 @@ export default function QuoteDetailPage() {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
         {/* Client */}
         <div className="bg-white border border-border rounded-xl p-4">
-          <h3 className="text-xs text-muted uppercase tracking-wide mb-2">
+          <h3 className="text-[11px] font-semibold text-fjord-600 uppercase tracking-wider mb-2">
             {t("quotes.client")}
           </h3>
           <p className="font-semibold">{quote.clientSnapshot.name}</p>
@@ -303,7 +303,7 @@ export default function QuoteDetailPage() {
 
         {/* Meta */}
         <div className="bg-white border border-border rounded-xl p-4">
-          <h3 className="text-xs text-muted uppercase tracking-wide mb-2">
+          <h3 className="text-[11px] font-semibold text-fjord-600 uppercase tracking-wider mb-2">
             Pakkumise andmed
           </h3>
           <div className="grid grid-cols-2 gap-2 text-sm">
@@ -321,31 +321,31 @@ export default function QuoteDetailPage() {
       <div className="bg-white border border-border rounded-xl overflow-hidden mb-6">
         <table className="w-full text-sm">
           <thead>
-            <tr className="border-b border-border bg-surface">
-              <th className="text-left px-4 py-2.5 font-medium w-8">Nr</th>
-              <th className="text-left px-4 py-2.5 font-medium">
+            <tr className="border-b border-border bg-fjord-50">
+              <th className="text-left px-4 py-2.5 text-[13px] font-semibold text-fjord-600 uppercase tracking-wide w-8">Nr</th>
+              <th className="text-left px-4 py-2.5 text-[13px] font-semibold text-fjord-600 uppercase tracking-wide">
                 Kirjeldus
               </th>
-              <th className="text-right px-4 py-2.5 font-medium">Kogus</th>
-              <th className="text-center px-4 py-2.5 font-medium">Ühik</th>
-              <th className="text-right px-4 py-2.5 font-medium">
+              <th className="text-right px-4 py-2.5 text-[13px] font-semibold text-fjord-600 uppercase tracking-wide">Kogus</th>
+              <th className="text-center px-4 py-2.5 text-[13px] font-semibold text-fjord-600 uppercase tracking-wide">Ühik</th>
+              <th className="text-right px-4 py-2.5 text-[13px] font-semibold text-fjord-600 uppercase tracking-wide">
                 Ühikuhind
               </th>
-              <th className="text-right px-4 py-2.5 font-medium">Kokku</th>
+              <th className="text-right px-4 py-2.5 text-[13px] font-semibold text-fjord-600 uppercase tracking-wide">Kokku</th>
             </tr>
           </thead>
           <tbody>
             {/* Labor items */}
             {labor.length > 0 && (
               <>
-                <tr className="bg-surface/30">
-                  <td colSpan={6} className="px-4 py-1.5 text-xs text-muted uppercase tracking-wide font-medium">
+                <tr className="bg-fjord-50/50">
+                  <td colSpan={6} className="px-4 py-1.5 text-[11px] font-bold text-fjord-600 uppercase tracking-wide">
                     Tööd
                   </td>
                 </tr>
                 {labor.map((item, i) => (
-                  <tr key={`l-${i}`} className="border-b border-border">
-                    <td className="px-4 py-2.5 text-muted">{i + 1}</td>
+                  <tr key={`l-${i}`} className="border-b border-fjord-50">
+                    <td className="px-4 py-2.5 text-fjord-600">{i + 1}</td>
                     <td className="px-4 py-2.5">{item.description}</td>
                     <td className="px-4 py-2.5 text-right font-mono">
                       {item.quantity}
@@ -365,14 +365,14 @@ export default function QuoteDetailPage() {
             {/* Material items */}
             {materials.length > 0 && (
               <>
-                <tr className="bg-surface/30">
-                  <td colSpan={6} className="px-4 py-1.5 text-xs text-muted uppercase tracking-wide font-medium">
+                <tr className="bg-fjord-50/50">
+                  <td colSpan={6} className="px-4 py-1.5 text-[11px] font-bold text-fjord-600 uppercase tracking-wide">
                     Materjalid
                   </td>
                 </tr>
                 {materials.map((item, i) => (
-                  <tr key={`m-${i}`} className="border-b border-border">
-                    <td className="px-4 py-2.5 text-muted">
+                  <tr key={`m-${i}`} className="border-b border-fjord-50">
+                    <td className="px-4 py-2.5 text-fjord-600">
                       {labor.length + i + 1}
                     </td>
                     <td className="px-4 py-2.5">{item.description}</td>
@@ -393,8 +393,8 @@ export default function QuoteDetailPage() {
 
             {/* If no separation needed (all same type) */}
             {labor.length === 0 && materials.length === 0 && quote.lineItems.map((item, i) => (
-              <tr key={i} className="border-b border-border">
-                <td className="px-4 py-2.5 text-muted">{i + 1}</td>
+              <tr key={i} className="border-b border-fjord-50">
+                <td className="px-4 py-2.5 text-fjord-600">{i + 1}</td>
                 <td className="px-4 py-2.5">{item.description}</td>
                 <td className="px-4 py-2.5 text-right font-mono">
                   {item.quantity}
@@ -431,9 +431,9 @@ export default function QuoteDetailPage() {
                   </span>
                 </div>
               )}
-              <div className="flex justify-between font-semibold text-base pt-2 border-t border-border">
+              <div className="flex justify-between font-semibold font-mono text-base pt-2 border-t-2 border-fjord-100">
                 <span>KOKKU:</span>
-                <span className="font-mono">{formatMoney(quote.total)}</span>
+                <span>{formatMoney(quote.total)}</span>
               </div>
             </div>
           </div>
@@ -442,8 +442,8 @@ export default function QuoteDetailPage() {
 
       {/* Notes */}
       {quote.notes && (
-        <div className="bg-white border border-border rounded-xl p-4 mb-6">
-          <h3 className="text-xs text-muted uppercase tracking-wide mb-2">
+        <div className="bg-amber-50/50 border border-amber-100 rounded-xl p-4 mb-6">
+          <h3 className="text-[11px] font-semibold text-fjord-600 uppercase tracking-wider mb-2">
             Märkmed
           </h3>
           <p className="text-sm">{quote.notes}</p>
@@ -451,7 +451,7 @@ export default function QuoteDetailPage() {
       )}
 
       {/* Legal clauses */}
-      <div className="bg-surface border border-border rounded-xl p-4 space-y-2 text-xs text-muted">
+      <div className="bg-fjord-50 border border-border rounded-xl p-4 space-y-2 text-xs text-muted">
         <p>{quote.disclaimerText}</p>
         <p>{quote.additionalWorkClause}</p>
         {quote.warrantyText && <p>Garantii: {quote.warrantyText}</p>}

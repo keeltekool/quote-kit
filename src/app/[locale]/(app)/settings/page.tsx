@@ -211,7 +211,7 @@ export default function SettingsPage() {
           <button
             onClick={handleSave}
             disabled={saving}
-            className="px-5 py-2 text-sm font-medium text-white bg-blue-600 rounded-lg hover:bg-blue-700 disabled:opacity-50 transition-colors"
+            className="px-5 py-2 text-sm font-medium text-white bg-fjord-700 rounded-lg hover:bg-fjord-800 disabled:opacity-50 transition-colors"
           >
             {saving ? t("common.loading") : t("common.save")}
           </button>
@@ -222,20 +222,20 @@ export default function SettingsPage() {
       <div className="flex gap-1 mb-6">
         <button
           onClick={() => setActiveTab("profile")}
-          className={`px-4 py-2 text-sm font-medium rounded-lg transition-colors ${
+          className={`px-5 py-2 text-sm font-medium rounded-full transition-colors ${
             activeTab === "profile"
-              ? "bg-blue-600 text-white"
-              : "bg-surface text-muted hover:text-foreground"
+              ? "bg-fjord-700 text-white"
+              : "text-fjord-600 hover:bg-fjord-50"
           }`}
         >
           {t("settings.profile")}
         </button>
         <button
           onClick={() => setActiveTab("defaults")}
-          className={`px-4 py-2 text-sm font-medium rounded-lg transition-colors ${
+          className={`px-5 py-2 text-sm font-medium rounded-full transition-colors ${
             activeTab === "defaults"
-              ? "bg-blue-600 text-white"
-              : "bg-surface text-muted hover:text-foreground"
+              ? "bg-fjord-700 text-white"
+              : "text-fjord-600 hover:bg-fjord-50"
           }`}
         >
           {t("settings.defaults")}
@@ -257,7 +257,7 @@ export default function SettingsPage() {
                 <input
                   value={form.companyName}
                   onChange={(e) => updateField("companyName", e.target.value)}
-                  className="w-full rounded-lg border border-border px-3 py-2 text-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none"
+                  className="w-full rounded-lg border border-border px-3 py-2 text-sm focus:border-fjord-700 focus:ring-2 focus:ring-fjord-700/20 outline-none"
                 />
               </div>
               <div>
@@ -267,7 +267,7 @@ export default function SettingsPage() {
                 <input
                   value={form.registryCode}
                   onChange={(e) => updateField("registryCode", e.target.value)}
-                  className="w-full rounded-lg border border-border px-3 py-2 text-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none"
+                  className="w-full rounded-lg border border-border px-3 py-2 text-sm focus:border-fjord-700 focus:ring-2 focus:ring-fjord-700/20 outline-none"
                 />
               </div>
               <div className="md:col-span-2">
@@ -277,7 +277,7 @@ export default function SettingsPage() {
                 <input
                   value={form.address}
                   onChange={(e) => updateField("address", e.target.value)}
-                  className="w-full rounded-lg border border-border px-3 py-2 text-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none"
+                  className="w-full rounded-lg border border-border px-3 py-2 text-sm focus:border-fjord-700 focus:ring-2 focus:ring-fjord-700/20 outline-none"
                 />
               </div>
               <div>
@@ -287,7 +287,7 @@ export default function SettingsPage() {
                 <input
                   value={form.phone}
                   onChange={(e) => updateField("phone", e.target.value)}
-                  className="w-full rounded-lg border border-border px-3 py-2 text-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none"
+                  className="w-full rounded-lg border border-border px-3 py-2 text-sm focus:border-fjord-700 focus:ring-2 focus:ring-fjord-700/20 outline-none"
                 />
               </div>
               <div>
@@ -298,7 +298,7 @@ export default function SettingsPage() {
                   type="email"
                   value={form.email}
                   onChange={(e) => updateField("email", e.target.value)}
-                  className="w-full rounded-lg border border-border px-3 py-2 text-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none"
+                  className="w-full rounded-lg border border-border px-3 py-2 text-sm focus:border-fjord-700 focus:ring-2 focus:ring-fjord-700/20 outline-none"
                 />
               </div>
             </div>
@@ -318,7 +318,7 @@ export default function SettingsPage() {
                   />
                 </div>
               ) : (
-                <div className="w-24 h-24 rounded-lg border-2 border-dashed border-border flex items-center justify-center text-muted">
+                <div className="w-24 h-24 rounded-lg border-2 border-dashed border-fjord-200 flex items-center justify-center text-muted">
                   <svg
                     className="w-8 h-8"
                     fill="none"
@@ -345,7 +345,7 @@ export default function SettingsPage() {
                 <button
                   onClick={() => fileInputRef.current?.click()}
                   disabled={uploading}
-                  className="px-4 py-2 text-sm font-medium border border-border rounded-lg hover:bg-surface transition-colors disabled:opacity-50"
+                  className="px-4 py-2 text-sm font-medium border border-border rounded-lg hover:bg-fjord-50 transition-colors disabled:opacity-50"
                 >
                   {uploading
                     ? "Laadin..."
@@ -381,7 +381,7 @@ export default function SettingsPage() {
                 onChange={(e) =>
                   updateField("isVatRegistered", e.target.checked)
                 }
-                className="w-4 h-4 rounded border-border text-blue-600 focus:ring-blue-500"
+                className="w-4 h-4 rounded border-border text-fjord-700 focus:ring-fjord-700"
               />
               <span className="text-sm">Ettevõte on käibemaksukohustuslane</span>
             </label>
@@ -394,7 +394,7 @@ export default function SettingsPage() {
                   value={form.kmkrNumber}
                   onChange={(e) => updateField("kmkrNumber", e.target.value)}
                   placeholder="EE123456789"
-                  className="w-full max-w-xs rounded-lg border border-border px-3 py-2 text-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none"
+                  className="w-full max-w-xs rounded-lg border border-border px-3 py-2 text-sm focus:border-fjord-700 focus:ring-2 focus:ring-fjord-700/20 outline-none"
                 />
               </div>
             )}
@@ -412,7 +412,7 @@ export default function SettingsPage() {
                   onClick={() => updateField("tradeType", tt)}
                   className={`px-3 py-2 text-sm rounded-lg border transition-colors ${
                     form.tradeType === tt
-                      ? "border-blue-500 bg-blue-50 text-blue-700"
+                      ? "border-fjord-700 bg-fjord-50 text-fjord-700"
                       : "border-border hover:bg-surface"
                   }`}
                 >
@@ -430,7 +430,7 @@ export default function SettingsPage() {
                     onChange={(e) =>
                       updateField("isMtrRegistered", e.target.checked)
                     }
-                    className="w-4 h-4 rounded border-border text-blue-600 focus:ring-blue-500"
+                    className="w-4 h-4 rounded border-border text-fjord-700 focus:ring-fjord-700"
                   />
                   <span className="text-sm">{t("profile.mtrRegistered")}</span>
                 </label>
@@ -444,7 +444,7 @@ export default function SettingsPage() {
                       onChange={(e) =>
                         updateField("mtrReference", e.target.value)
                       }
-                      className="w-full max-w-md rounded-lg border border-border px-3 py-2 text-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none"
+                      className="w-full max-w-md rounded-lg border border-border px-3 py-2 text-sm focus:border-fjord-700 focus:ring-2 focus:ring-fjord-700/20 outline-none"
                     />
                   </div>
                 )}
@@ -463,7 +463,7 @@ export default function SettingsPage() {
                 <input
                   value={form.iban}
                   onChange={(e) => updateField("iban", e.target.value)}
-                  className="w-full rounded-lg border border-border px-3 py-2 text-sm font-mono focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none"
+                  className="w-full rounded-lg border border-border px-3 py-2 text-sm font-mono focus:border-fjord-700 focus:ring-2 focus:ring-fjord-700/20 outline-none"
                 />
               </div>
               <div>
@@ -473,7 +473,7 @@ export default function SettingsPage() {
                 <input
                   value={form.bankName}
                   onChange={(e) => updateField("bankName", e.target.value)}
-                  className="w-full rounded-lg border border-border px-3 py-2 text-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none"
+                  className="w-full rounded-lg border border-border px-3 py-2 text-sm focus:border-fjord-700 focus:ring-2 focus:ring-fjord-700/20 outline-none"
                 />
               </div>
             </div>
@@ -504,7 +504,7 @@ export default function SettingsPage() {
                       parseInt(e.target.value) || 14
                     )
                   }
-                  className="w-full rounded-lg border border-border px-3 py-2 text-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none"
+                  className="w-full rounded-lg border border-border px-3 py-2 text-sm focus:border-fjord-700 focus:ring-2 focus:ring-fjord-700/20 outline-none"
                 />
               </div>
               <div>
@@ -522,7 +522,7 @@ export default function SettingsPage() {
                       parseInt(e.target.value) || 14
                     )
                   }
-                  className="w-full rounded-lg border border-border px-3 py-2 text-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none"
+                  className="w-full rounded-lg border border-border px-3 py-2 text-sm focus:border-fjord-700 focus:ring-2 focus:ring-fjord-700/20 outline-none"
                 />
               </div>
               <div className="md:col-span-2">
@@ -534,7 +534,7 @@ export default function SettingsPage() {
                   onChange={(e) =>
                     updateField("defaultWarrantyB2c", e.target.value)
                   }
-                  className="w-full rounded-lg border border-border px-3 py-2 text-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none"
+                  className="w-full rounded-lg border border-border px-3 py-2 text-sm focus:border-fjord-700 focus:ring-2 focus:ring-fjord-700/20 outline-none"
                 />
               </div>
               <div className="md:col-span-2">
@@ -546,7 +546,7 @@ export default function SettingsPage() {
                   onChange={(e) =>
                     updateField("defaultWarrantyB2b", e.target.value)
                   }
-                  className="w-full rounded-lg border border-border px-3 py-2 text-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none"
+                  className="w-full rounded-lg border border-border px-3 py-2 text-sm focus:border-fjord-700 focus:ring-2 focus:ring-fjord-700/20 outline-none"
                 />
               </div>
             </div>
@@ -564,7 +564,7 @@ export default function SettingsPage() {
                   value={form.quotePrefix}
                   onChange={(e) => updateField("quotePrefix", e.target.value)}
                   placeholder="HP"
-                  className="w-full rounded-lg border border-border px-3 py-2 text-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none"
+                  className="w-full rounded-lg border border-border px-3 py-2 text-sm focus:border-fjord-700 focus:ring-2 focus:ring-fjord-700/20 outline-none"
                 />
                 <p className="text-xs text-muted mt-1">
                   Nt: {form.quotePrefix || "HP"}-001
@@ -578,7 +578,7 @@ export default function SettingsPage() {
                   value={form.invoicePrefix}
                   onChange={(e) => updateField("invoicePrefix", e.target.value)}
                   placeholder="2026"
-                  className="w-full rounded-lg border border-border px-3 py-2 text-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none"
+                  className="w-full rounded-lg border border-border px-3 py-2 text-sm focus:border-fjord-700 focus:ring-2 focus:ring-fjord-700/20 outline-none"
                 />
                 <p className="text-xs text-muted mt-1">
                   Nt: {form.invoicePrefix || "2026"}-001
@@ -600,7 +600,7 @@ export default function SettingsPage() {
                     onClick={() => updateField("documentLanguage", "et")}
                     className={`flex-1 px-3 py-2 text-sm rounded-lg border transition-colors ${
                       form.documentLanguage === "et"
-                        ? "border-blue-500 bg-blue-50 text-blue-700"
+                        ? "border-fjord-700 bg-fjord-50 text-fjord-700"
                         : "border-border hover:bg-surface"
                     }`}
                   >
@@ -610,7 +610,7 @@ export default function SettingsPage() {
                     onClick={() => updateField("documentLanguage", "en")}
                     className={`flex-1 px-3 py-2 text-sm rounded-lg border transition-colors ${
                       form.documentLanguage === "en"
-                        ? "border-blue-500 bg-blue-50 text-blue-700"
+                        ? "border-fjord-700 bg-fjord-50 text-fjord-700"
                         : "border-border hover:bg-surface"
                     }`}
                   >
@@ -635,7 +635,7 @@ export default function SettingsPage() {
                   <input
                     value={form.accentColor}
                     onChange={(e) => updateField("accentColor", e.target.value)}
-                    className="w-28 rounded-lg border border-border px-3 py-2 text-sm font-mono focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none"
+                    className="w-28 rounded-lg border border-border px-3 py-2 text-sm font-mono focus:border-fjord-700 focus:ring-2 focus:ring-fjord-700/20 outline-none"
                   />
                   <div
                     className="h-10 flex-1 rounded-lg"
