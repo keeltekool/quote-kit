@@ -17,13 +17,13 @@ type Quote = {
 };
 
 const statusColors: Record<string, string> = {
-  draft: "bg-gray-100 text-gray-700",
-  sent: "bg-blue-50 text-blue-700",
-  viewed: "bg-indigo-50 text-indigo-700",
-  accepted: "bg-emerald-50 text-emerald-700",
-  declined: "bg-red-50 text-red-700",
-  expired: "bg-amber-50 text-amber-700",
-  invoiced: "bg-purple-50 text-purple-700",
+  draft: "bg-gray-100 text-gray-600 border-gray-200",
+  sent: "bg-fjord-50 text-fjord-700 border-fjord-200",
+  viewed: "bg-blue-50 text-blue-600 border-blue-200",
+  accepted: "bg-emerald-50 text-emerald-600 border-emerald-200",
+  declined: "bg-red-50 text-red-600 border-red-200",
+  expired: "bg-amber-50 text-amber-600 border-amber-200",
+  invoiced: "bg-green-50 text-green-600 border-green-200",
 };
 
 const statuses = [
@@ -89,7 +89,7 @@ export default function QuotesPage() {
         <h1 className="text-2xl font-bold">{t("quotes.title")}</h1>
         <button
           onClick={() => router.push("/quotes/new")}
-          className="px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-lg hover:bg-blue-700 transition-colors"
+          className="px-4 py-2 text-sm font-medium text-white bg-fjord-700 rounded-lg hover:bg-fjord-800 transition-colors"
         >
           + {t("quotes.new")}
         </button>
@@ -101,10 +101,10 @@ export default function QuotesPage() {
           <button
             key={s}
             onClick={() => setFilter(s)}
-            className={`px-3 py-1.5 text-xs font-medium rounded-lg whitespace-nowrap transition-colors ${
+            className={`px-3 py-1.5 text-xs font-medium rounded-full whitespace-nowrap transition-colors ${
               filter === s
-                ? "bg-blue-600 text-white"
-                : "bg-surface text-muted hover:text-foreground"
+                ? "bg-fjord-700 text-white"
+                : "text-fjord-600 hover:bg-fjord-50"
             }`}
           >
             {s === "all"
@@ -121,7 +121,7 @@ export default function QuotesPage() {
           <p>Pakkumisi pole veel loodud.</p>
           <button
             onClick={() => router.push("/quotes/new")}
-            className="mt-3 text-blue-600 font-medium hover:underline"
+            className="mt-3 text-fjord-700 font-medium hover:underline"
           >
             + {t("quotes.new")}
           </button>
@@ -130,20 +130,20 @@ export default function QuotesPage() {
         <div className="bg-white border border-border rounded-xl overflow-hidden">
           <table className="w-full text-sm">
             <thead>
-              <tr className="border-b border-border bg-surface">
-                <th className="text-left px-4 py-2.5 font-medium">
+              <tr className="border-b border-border bg-fjord-50">
+                <th className="text-left px-4 py-2.5 text-[13px] font-semibold text-fjord-600 uppercase tracking-wide">
                   {t("quotes.number")}
                 </th>
-                <th className="text-left px-4 py-2.5 font-medium">
+                <th className="text-left px-4 py-2.5 text-[13px] font-semibold text-fjord-600 uppercase tracking-wide">
                   {t("quotes.client")}
                 </th>
-                <th className="text-right px-4 py-2.5 font-medium hidden md:table-cell">
+                <th className="text-right px-4 py-2.5 text-[13px] font-semibold text-fjord-600 uppercase tracking-wide hidden md:table-cell">
                   {t("quotes.amount")}
                 </th>
-                <th className="text-center px-4 py-2.5 font-medium">
+                <th className="text-center px-4 py-2.5 text-[13px] font-semibold text-fjord-600 uppercase tracking-wide">
                   {t("quotes.status")}
                 </th>
-                <th className="text-left px-4 py-2.5 font-medium hidden lg:table-cell">
+                <th className="text-left px-4 py-2.5 text-[13px] font-semibold text-fjord-600 uppercase tracking-wide hidden lg:table-cell">
                   {t("quotes.date")}
                 </th>
                 <th className="px-4 py-2.5 w-32" />
@@ -153,12 +153,12 @@ export default function QuotesPage() {
               {quotes.map((q) => (
                 <tr
                   key={q.id}
-                  className="border-b border-border last:border-0 hover:bg-surface/50"
+                  className="border-b border-fjord-50 last:border-0 hover:bg-fjord-50/50"
                 >
                   <td className="px-4 py-3">
                     <button
                       onClick={() => router.push(`/quotes/${q.id}`)}
-                      className="font-medium font-mono text-xs text-blue-600 hover:underline"
+                      className="font-medium font-mono text-xs text-fjord-700 hover:underline"
                     >
                       {q.quoteNumber}
                     </button>
@@ -166,7 +166,7 @@ export default function QuotesPage() {
                   <td className="px-4 py-3">
                     <button
                       onClick={() => router.push(`/quotes/${q.id}`)}
-                      className="font-medium hover:text-blue-600 text-left"
+                      className="font-medium hover:text-fjord-700 text-left"
                     >
                       {q.clientSnapshot.name}
                     </button>
@@ -176,8 +176,8 @@ export default function QuotesPage() {
                   </td>
                   <td className="px-4 py-3 text-center">
                     <span
-                      className={`inline-block px-2 py-0.5 rounded text-xs font-medium ${
-                        statusColors[q.status] || "bg-gray-100 text-gray-700"
+                      className={`inline-block px-2 py-0.5 rounded-full border text-xs font-medium ${
+                        statusColors[q.status] || "bg-gray-100 text-gray-600 border-gray-200"
                       }`}
                     >
                       {t(`quotes.${q.status}`)}
@@ -193,7 +193,7 @@ export default function QuotesPage() {
                           onClick={() =>
                             handleStatusUpdate(q.id, "sent")
                           }
-                          className="text-xs text-blue-600 hover:underline"
+                          className="text-xs text-fjord-700 hover:underline"
                         >
                           {t("quotes.send")}
                         </button>

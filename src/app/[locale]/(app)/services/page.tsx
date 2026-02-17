@@ -211,7 +211,7 @@ export default function ServicesPage() {
           </button>
           <button
             onClick={openNew}
-            className="px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-lg hover:bg-blue-700 transition-colors"
+            className="px-4 py-2 text-sm font-medium text-white bg-fjord-700 rounded-lg hover:bg-fjord-800 transition-colors"
           >
             + {t("services.new")}
           </button>
@@ -271,7 +271,7 @@ export default function ServicesPage() {
               <input
                 value={form.nameEt}
                 onChange={(e) => update({ nameEt: e.target.value })}
-                className="w-full rounded-lg border border-border px-3 py-2 text-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none"
+                className="w-full rounded-lg border border-border px-3 py-2 text-sm focus:border-fjord-700 focus:ring-2 focus:ring-fjord-700/20 outline-none"
                 placeholder="nt. Torude vahetus"
               />
             </div>
@@ -282,7 +282,7 @@ export default function ServicesPage() {
               <input
                 value={form.nameEn}
                 onChange={(e) => update({ nameEn: e.target.value })}
-                className="w-full rounded-lg border border-border px-3 py-2 text-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none"
+                className="w-full rounded-lg border border-border px-3 py-2 text-sm focus:border-fjord-700 focus:ring-2 focus:ring-fjord-700/20 outline-none"
                 placeholder="e.g. Pipe replacement"
               />
             </div>
@@ -293,7 +293,7 @@ export default function ServicesPage() {
               <input
                 value={form.category}
                 onChange={(e) => update({ category: e.target.value })}
-                className="w-full rounded-lg border border-border px-3 py-2 text-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none"
+                className="w-full rounded-lg border border-border px-3 py-2 text-sm focus:border-fjord-700 focus:ring-2 focus:ring-fjord-700/20 outline-none"
                 placeholder="nt. Torustik"
               />
             </div>
@@ -307,7 +307,7 @@ export default function ServicesPage() {
                   step="0.01"
                   value={form.unitPrice}
                   onChange={(e) => update({ unitPrice: e.target.value })}
-                  className="w-full rounded-lg border border-border px-3 py-2 text-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none"
+                  className="w-full rounded-lg border border-border px-3 py-2 text-sm focus:border-fjord-700 focus:ring-2 focus:ring-fjord-700/20 outline-none"
                   placeholder="80.00"
                 />
               </div>
@@ -318,7 +318,7 @@ export default function ServicesPage() {
                 <select
                   value={form.unit}
                   onChange={(e) => update({ unit: e.target.value })}
-                  className="w-full rounded-lg border border-border px-3 py-2 text-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none"
+                  className="w-full rounded-lg border border-border px-3 py-2 text-sm focus:border-fjord-700 focus:ring-2 focus:ring-fjord-700/20 outline-none"
                 >
                   {UNITS.map((u) => (
                     <option key={u} value={u}>
@@ -335,7 +335,7 @@ export default function ServicesPage() {
               <input
                 value={form.description}
                 onChange={(e) => update({ description: e.target.value })}
-                className="w-full rounded-lg border border-border px-3 py-2 text-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none"
+                className="w-full rounded-lg border border-border px-3 py-2 text-sm focus:border-fjord-700 focus:ring-2 focus:ring-fjord-700/20 outline-none"
               />
             </div>
             <div className="flex items-center gap-4">
@@ -344,7 +344,7 @@ export default function ServicesPage() {
                   type="checkbox"
                   checked={form.isMaterial}
                   onChange={(e) => update({ isMaterial: e.target.checked })}
-                  className="h-4 w-4 rounded border-border text-blue-600"
+                  className="h-4 w-4 rounded border-border text-fjord-700"
                 />
                 <span className="text-sm">{t("services.material")}</span>
               </label>
@@ -357,7 +357,7 @@ export default function ServicesPage() {
                 type="number"
                 value={form.estimatedMinutes}
                 onChange={(e) => update({ estimatedMinutes: e.target.value })}
-                className="w-full rounded-lg border border-border px-3 py-2 text-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none"
+                className="w-full rounded-lg border border-border px-3 py-2 text-sm focus:border-fjord-700 focus:ring-2 focus:ring-fjord-700/20 outline-none"
                 placeholder="60"
               />
             </div>
@@ -375,7 +375,7 @@ export default function ServicesPage() {
             <button
               onClick={handleSave}
               disabled={saving || !canSave}
-              className="px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-lg hover:bg-blue-700 disabled:opacity-50 transition-colors"
+              className="px-4 py-2 text-sm font-medium text-white bg-fjord-700 rounded-lg hover:bg-fjord-800 disabled:opacity-50 transition-colors"
             >
               {saving ? t("common.loading") : t("common.save")}
             </button>
@@ -389,7 +389,7 @@ export default function ServicesPage() {
           <p>Teenuseid pole veel lisatud.</p>
           <button
             onClick={openNew}
-            className="mt-3 text-blue-600 font-medium hover:underline"
+            className="mt-3 text-fjord-700 font-medium hover:underline"
           >
             + {t("services.new")}
           </button>
@@ -403,17 +403,17 @@ export default function ServicesPage() {
             <div className="bg-white border border-border rounded-xl overflow-hidden">
               <table className="w-full text-sm">
                 <thead>
-                  <tr className="border-b border-border bg-surface">
-                    <th className="text-left px-4 py-2.5 font-medium">
+                  <tr className="border-b border-border bg-fjord-50">
+                    <th className="text-left px-4 py-2.5 text-[13px] font-semibold text-fjord-600 uppercase tracking-wide">
                       {t("services.name")}
                     </th>
-                    <th className="text-right px-4 py-2.5 font-medium">
+                    <th className="text-right px-4 py-2.5 text-[13px] font-semibold text-fjord-600 uppercase tracking-wide">
                       {t("services.unitPrice")}
                     </th>
-                    <th className="text-center px-4 py-2.5 font-medium">
+                    <th className="text-center px-4 py-2.5 text-[13px] font-semibold text-fjord-600 uppercase tracking-wide">
                       {t("services.unit")}
                     </th>
-                    <th className="text-center px-4 py-2.5 font-medium w-20">
+                    <th className="text-center px-4 py-2.5 text-[13px] font-semibold text-fjord-600 uppercase tracking-wide w-20">
                       Tüüp
                     </th>
                     <th className="px-4 py-2.5 w-24" />
@@ -423,7 +423,7 @@ export default function ServicesPage() {
                   {items.map((s) => (
                     <tr
                       key={s.id}
-                      className="border-b border-border last:border-0 hover:bg-surface/50"
+                      className="border-b border-fjord-50 last:border-0 hover:bg-fjord-50/50"
                     >
                       <td className="px-4 py-3">
                         <span className="font-medium">{s.nameEt}</span>

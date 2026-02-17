@@ -18,11 +18,11 @@ type Invoice = {
 };
 
 const statusColors: Record<string, string> = {
-  issued: "bg-blue-50 text-blue-700",
-  sent: "bg-indigo-50 text-indigo-700",
-  paid: "bg-emerald-50 text-emerald-700",
-  overdue: "bg-red-50 text-red-700",
-  cancelled: "bg-gray-100 text-gray-500",
+  issued: "bg-blue-50 text-blue-600 border-blue-200",
+  sent: "bg-fjord-50 text-fjord-700 border-fjord-200",
+  paid: "bg-emerald-50 text-emerald-600 border-emerald-200",
+  overdue: "bg-red-50 text-red-600 border-red-200",
+  cancelled: "bg-gray-100 text-gray-500 border-gray-200",
 };
 
 const statuses = ["all", "issued", "sent", "paid", "overdue", "cancelled"];
@@ -77,7 +77,7 @@ export default function InvoicesPage() {
         <h1 className="text-2xl font-bold">{t("invoices.title")}</h1>
         <button
           onClick={() => router.push("/invoices/new")}
-          className="px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-lg hover:bg-blue-700 transition-colors"
+          className="px-4 py-2 text-sm font-medium text-white bg-fjord-700 rounded-lg hover:bg-fjord-800 transition-colors"
         >
           + {t("invoices.new")}
         </button>
@@ -88,10 +88,10 @@ export default function InvoicesPage() {
           <button
             key={s}
             onClick={() => setFilter(s)}
-            className={`px-3 py-1.5 text-xs font-medium rounded-lg whitespace-nowrap transition-colors ${
+            className={`px-3 py-1.5 text-xs font-medium rounded-full whitespace-nowrap transition-colors ${
               filter === s
-                ? "bg-blue-600 text-white"
-                : "bg-surface text-muted hover:text-foreground"
+                ? "bg-fjord-700 text-white"
+                : "text-fjord-600 hover:bg-fjord-50"
             }`}
           >
             {s === "all" ? "Kõik" : t(`invoices.${s}`)}
@@ -106,7 +106,7 @@ export default function InvoicesPage() {
           <p>Arveid pole veel loodud.</p>
           <button
             onClick={() => router.push("/invoices/new")}
-            className="mt-3 text-blue-600 font-medium hover:underline"
+            className="mt-3 text-fjord-700 font-medium hover:underline"
           >
             + {t("invoices.new")}
           </button>
@@ -115,20 +115,20 @@ export default function InvoicesPage() {
         <div className="bg-white border border-border rounded-xl overflow-hidden">
           <table className="w-full text-sm">
             <thead>
-              <tr className="border-b border-border bg-surface">
-                <th className="text-left px-4 py-2.5 font-medium">
+              <tr className="border-b border-border bg-fjord-50">
+                <th className="text-left px-4 py-2.5 text-[13px] font-semibold text-fjord-600 uppercase tracking-wide">
                   {t("invoices.number")}
                 </th>
-                <th className="text-left px-4 py-2.5 font-medium">
+                <th className="text-left px-4 py-2.5 text-[13px] font-semibold text-fjord-600 uppercase tracking-wide">
                   {t("invoices.client")}
                 </th>
-                <th className="text-right px-4 py-2.5 font-medium hidden md:table-cell">
+                <th className="text-right px-4 py-2.5 text-[13px] font-semibold text-fjord-600 uppercase tracking-wide hidden md:table-cell">
                   {t("invoices.amount")}
                 </th>
-                <th className="text-center px-4 py-2.5 font-medium">
+                <th className="text-center px-4 py-2.5 text-[13px] font-semibold text-fjord-600 uppercase tracking-wide">
                   {t("invoices.status")}
                 </th>
-                <th className="text-left px-4 py-2.5 font-medium hidden lg:table-cell">
+                <th className="text-left px-4 py-2.5 text-[13px] font-semibold text-fjord-600 uppercase tracking-wide hidden lg:table-cell">
                   {t("invoices.dueDate")}
                 </th>
                 <th className="px-4 py-2.5 w-28" />
@@ -138,12 +138,12 @@ export default function InvoicesPage() {
               {invoices.map((inv) => (
                 <tr
                   key={inv.id}
-                  className="border-b border-border last:border-0 hover:bg-surface/50"
+                  className="border-b border-fjord-50 last:border-0 hover:bg-fjord-50/50"
                 >
                   <td className="px-4 py-3">
                     <button
                       onClick={() => router.push(`/invoices/${inv.id}`)}
-                      className="font-medium font-mono text-xs text-blue-600 hover:underline"
+                      className="font-medium font-mono text-xs text-fjord-700 hover:underline"
                     >
                       {inv.invoiceNumber}
                     </button>
@@ -151,7 +151,7 @@ export default function InvoicesPage() {
                   <td className="px-4 py-3">
                     <button
                       onClick={() => router.push(`/invoices/${inv.id}`)}
-                      className="font-medium hover:text-blue-600 text-left"
+                      className="font-medium hover:text-fjord-700 text-left"
                     >
                       {inv.clientSnapshot.name}
                     </button>
@@ -161,10 +161,10 @@ export default function InvoicesPage() {
                   </td>
                   <td className="px-4 py-3 text-center">
                     <span
-                      className={`inline-block px-2 py-0.5 rounded text-xs font-medium ${
+                      className={`inline-block px-2 py-0.5 rounded-full border text-xs font-medium ${
                         isOverdue(inv)
-                          ? "bg-red-50 text-red-700"
-                          : statusColors[inv.status] || "bg-gray-100 text-gray-700"
+                          ? "bg-red-50 text-red-600 border-red-200"
+                          : statusColors[inv.status] || "bg-gray-100 text-gray-600 border-gray-200"
                       }`}
                     >
                       {isOverdue(inv) ? t("invoices.overdue") : t(`invoices.${inv.status}`)}

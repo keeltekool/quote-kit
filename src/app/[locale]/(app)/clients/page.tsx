@@ -186,7 +186,7 @@ export default function ClientsPage() {
         <h1 className="text-2xl font-bold">{t("clients.title")}</h1>
         <button
           onClick={openNew}
-          className="px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-lg hover:bg-blue-700 transition-colors"
+          className="px-4 py-2 text-sm font-medium text-white bg-fjord-700 rounded-lg hover:bg-fjord-800 transition-colors"
         >
           + {t("clients.new")}
         </button>
@@ -205,7 +205,7 @@ export default function ClientsPage() {
               onClick={() => update({ clientType: "b2b" })}
               className={`px-4 py-2 text-sm rounded-lg font-medium transition-colors ${
                 form.clientType === "b2b"
-                  ? "bg-blue-600 text-white"
+                  ? "bg-fjord-700 text-white"
                   : "bg-surface text-muted hover:text-foreground"
               }`}
             >
@@ -222,7 +222,7 @@ export default function ClientsPage() {
               }
               className={`px-4 py-2 text-sm rounded-lg font-medium transition-colors ${
                 form.clientType === "b2c"
-                  ? "bg-blue-600 text-white"
+                  ? "bg-fjord-700 text-white"
                   : "bg-surface text-muted hover:text-foreground"
               }`}
             >
@@ -239,19 +239,19 @@ export default function ClientsPage() {
               <input
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full rounded-lg border border-border px-3 py-2 text-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none"
+                className="w-full rounded-lg border border-border px-3 py-2 text-sm focus:border-fjord-700 focus:ring-2 focus:ring-fjord-700/20 outline-none"
                 placeholder="Otsi Äriregistrist..."
               />
               {searching && (
                 <p className="text-xs text-muted mt-1">Otsin...</p>
               )}
               {searchResults.length > 0 && (
-                <div className="absolute z-10 mt-1 w-full bg-white border border-border rounded-lg shadow-lg max-h-60 overflow-y-auto">
+                <div className="absolute z-10 mt-1 w-full bg-white border border-border rounded-lg max-h-60 overflow-y-auto">
                   {searchResults.map((r, i) => (
                     <button
                       key={i}
                       onClick={() => selectCompany(r)}
-                      className="w-full text-left px-4 py-2.5 text-sm hover:bg-surface border-b border-border last:border-0"
+                      className="w-full text-left px-4 py-2.5 text-sm hover:bg-fjord-50 border-b border-border last:border-0"
                     >
                       <span className="font-medium">{r.arilesnimi}</span>
                       <span className="text-muted ml-2">
@@ -272,7 +272,7 @@ export default function ClientsPage() {
               <input
                 value={form.name}
                 onChange={(e) => update({ name: e.target.value })}
-                className="w-full rounded-lg border border-border px-3 py-2 text-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none"
+                className="w-full rounded-lg border border-border px-3 py-2 text-sm focus:border-fjord-700 focus:ring-2 focus:ring-fjord-700/20 outline-none"
               />
             </div>
             {form.clientType === "b2b" && (
@@ -283,7 +283,7 @@ export default function ClientsPage() {
                 <input
                   value={form.registryCode}
                   onChange={(e) => update({ registryCode: e.target.value })}
-                  className="w-full rounded-lg border border-border px-3 py-2 text-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none"
+                  className="w-full rounded-lg border border-border px-3 py-2 text-sm focus:border-fjord-700 focus:ring-2 focus:ring-fjord-700/20 outline-none"
                 />
               </div>
             )}
@@ -294,7 +294,7 @@ export default function ClientsPage() {
               <input
                 value={form.address}
                 onChange={(e) => update({ address: e.target.value })}
-                className="w-full rounded-lg border border-border px-3 py-2 text-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none"
+                className="w-full rounded-lg border border-border px-3 py-2 text-sm focus:border-fjord-700 focus:ring-2 focus:ring-fjord-700/20 outline-none"
               />
             </div>
             {form.clientType === "b2b" && (
@@ -307,7 +307,7 @@ export default function ClientsPage() {
                   onChange={(e) =>
                     update({ kmkrNumber: e.target.value.toUpperCase() })
                   }
-                  className="w-full rounded-lg border border-border px-3 py-2 text-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none"
+                  className="w-full rounded-lg border border-border px-3 py-2 text-sm focus:border-fjord-700 focus:ring-2 focus:ring-fjord-700/20 outline-none"
                   placeholder="EE123456789"
                 />
               </div>
@@ -320,7 +320,7 @@ export default function ClientsPage() {
                 type="email"
                 value={form.email}
                 onChange={(e) => update({ email: e.target.value })}
-                className="w-full rounded-lg border border-border px-3 py-2 text-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none"
+                className="w-full rounded-lg border border-border px-3 py-2 text-sm focus:border-fjord-700 focus:ring-2 focus:ring-fjord-700/20 outline-none"
               />
             </div>
             <div>
@@ -331,7 +331,7 @@ export default function ClientsPage() {
                 type="tel"
                 value={form.phone}
                 onChange={(e) => update({ phone: e.target.value })}
-                className="w-full rounded-lg border border-border px-3 py-2 text-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none"
+                className="w-full rounded-lg border border-border px-3 py-2 text-sm focus:border-fjord-700 focus:ring-2 focus:ring-fjord-700/20 outline-none"
               />
             </div>
             {form.clientType === "b2b" && (
@@ -342,7 +342,7 @@ export default function ClientsPage() {
                 <input
                   value={form.contactPerson}
                   onChange={(e) => update({ contactPerson: e.target.value })}
-                  className="w-full rounded-lg border border-border px-3 py-2 text-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none"
+                  className="w-full rounded-lg border border-border px-3 py-2 text-sm focus:border-fjord-700 focus:ring-2 focus:ring-fjord-700/20 outline-none"
                 />
               </div>
             )}
@@ -351,7 +351,7 @@ export default function ClientsPage() {
               <input
                 value={form.notes}
                 onChange={(e) => update({ notes: e.target.value })}
-                className="w-full rounded-lg border border-border px-3 py-2 text-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none"
+                className="w-full rounded-lg border border-border px-3 py-2 text-sm focus:border-fjord-700 focus:ring-2 focus:ring-fjord-700/20 outline-none"
               />
             </div>
           </div>
@@ -373,7 +373,7 @@ export default function ClientsPage() {
             <button
               onClick={handleSave}
               disabled={saving || !canSave}
-              className="px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-lg hover:bg-blue-700 disabled:opacity-50 transition-colors"
+              className="px-4 py-2 text-sm font-medium text-white bg-fjord-700 rounded-lg hover:bg-fjord-800 disabled:opacity-50 transition-colors"
             >
               {saving ? t("common.loading") : t("common.save")}
             </button>
@@ -387,7 +387,7 @@ export default function ClientsPage() {
           <p>Kliente pole veel lisatud.</p>
           <button
             onClick={openNew}
-            className="mt-3 text-blue-600 font-medium hover:underline"
+            className="mt-3 text-fjord-700 font-medium hover:underline"
           >
             + {t("clients.new")}
           </button>
@@ -396,17 +396,17 @@ export default function ClientsPage() {
         <div className="bg-white border border-border rounded-xl overflow-hidden">
           <table className="w-full text-sm">
             <thead>
-              <tr className="border-b border-border bg-surface">
-                <th className="text-left px-4 py-2.5 font-medium">
+              <tr className="border-b border-border bg-fjord-50">
+                <th className="text-left px-4 py-2.5 text-[13px] font-semibold text-fjord-600 uppercase tracking-wide">
                   {t("clients.name")}
                 </th>
-                <th className="text-left px-4 py-2.5 font-medium hidden md:table-cell">
+                <th className="text-left px-4 py-2.5 text-[13px] font-semibold text-fjord-600 uppercase tracking-wide hidden md:table-cell">
                   {t("clients.registryCode")}
                 </th>
-                <th className="text-left px-4 py-2.5 font-medium hidden lg:table-cell">
+                <th className="text-left px-4 py-2.5 text-[13px] font-semibold text-fjord-600 uppercase tracking-wide hidden lg:table-cell">
                   {t("clients.email")}
                 </th>
-                <th className="text-center px-4 py-2.5 font-medium w-20">
+                <th className="text-center px-4 py-2.5 text-[13px] font-semibold text-fjord-600 uppercase tracking-wide w-20">
                   Tüüp
                 </th>
                 <th className="px-4 py-2.5 w-24" />
@@ -416,7 +416,7 @@ export default function ClientsPage() {
               {clients.map((c) => (
                 <tr
                   key={c.id}
-                  className="border-b border-border last:border-0 hover:bg-surface/50"
+                  className="border-b border-fjord-50 last:border-0 hover:bg-fjord-50/50"
                 >
                   <td className="px-4 py-3">
                     <span className="font-medium">{c.name}</span>
