@@ -49,6 +49,17 @@ export default function ServicesPage() {
   const [form, setForm] = useState<ServiceForm>(emptyForm);
   const [saving, setSaving] = useState(false);
   const [showArchived, setShowArchived] = useState(false);
+  const [suggesting, setSuggesting] = useState(false);
+  const [suggestions, setSuggestions] = useState<
+    {
+      nameEt: string;
+      category: string;
+      unitPrice: number;
+      unit: string;
+      isMaterial: boolean;
+      description?: string;
+    }[]
+  >([]);
 
   const fetchServices = useCallback(async () => {
     const res = await fetch("/api/services");
@@ -116,6 +127,51 @@ export default function ServicesPage() {
     fetchServices();
   };
 
+  const handleSuggest = async () => {
+    setSuggesting(true);
+    try {
+      // Fetch profile to get trade type
+      const profileRes = await fetch("/api/profile");
+      const { data: profile } = await profileRes.json();
+      if (!profile) {
+        alert("Profiil puudub");
+        setSuggesting(false);
+        return;
+      }
+
+      const res = await fetch("/api/services/suggest", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ tradeType: profile.tradeType }),
+      });
+
+      if (!res.ok) throw new Error("Suggest failed");
+      const { data } = await res.json();
+      setSuggestions(data || []);
+    } catch {
+      alert("AI soovituste genereerimine ebaõnnestus");
+    }
+    setSuggesting(false);
+  };
+
+  const addSuggestion = async (sug: (typeof suggestions)[0]) => {
+    await fetch("/api/services", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        nameEt: sug.nameEt,
+        category: sug.category,
+        unitPrice: sug.unitPrice.toString(),
+        unit: sug.unit,
+        isMaterial: sug.isMaterial,
+        description: sug.description || "",
+        estimatedMinutes: null,
+      }),
+    });
+    setSuggestions((prev) => prev.filter((s) => s !== sug));
+    fetchServices();
+  };
+
   const activeServices = services.filter((s) => s.isActive);
   const archivedServices = services.filter((s) => !s.isActive);
 
@@ -145,13 +201,61 @@ export default function ServicesPage() {
     <div>
       <div className="flex items-center justify-between mb-6">
         <h1 className="text-2xl font-bold">{t("services.title")}</h1>
-        <button
-          onClick={openNew}
-          className="px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-lg hover:bg-blue-700 transition-colors"
-        >
-          + {t("services.new")}
-        </button>
+        <div className="flex gap-2">
+          <button
+            onClick={handleSuggest}
+            disabled={suggesting}
+            className="px-4 py-2 text-sm font-medium text-purple-600 border border-purple-300 rounded-lg hover:bg-purple-50 disabled:opacity-50 transition-colors"
+          >
+            {suggesting ? "Genereerin..." : t("services.suggestServices")}
+          </button>
+          <button
+            onClick={openNew}
+            className="px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-lg hover:bg-blue-700 transition-colors"
+          >
+            + {t("services.new")}
+          </button>
+        </div>
       </div>
+
+      {/* AI suggestions */}
+      {suggestions.length > 0 && (
+        <div className="mb-6 bg-purple-50 border border-purple-200 rounded-xl p-4">
+          <div className="flex items-center justify-between mb-3">
+            <h2 className="text-sm font-semibold text-purple-800">
+              AI soovitused ({suggestions.length})
+            </h2>
+            <button
+              onClick={() => setSuggestions([])}
+              className="text-xs text-purple-600 hover:underline"
+            >
+              Sulge
+            </button>
+          </div>
+          <div className="space-y-2">
+            {suggestions.map((sug, i) => (
+              <div
+                key={i}
+                className="flex items-center justify-between bg-white rounded-lg px-3 py-2 border border-purple-100"
+              >
+                <div className="min-w-0 flex-1">
+                  <span className="text-sm font-medium">{sug.nameEt}</span>
+                  <span className="text-xs text-muted ml-2">
+                    {sug.category} &middot; &euro;{sug.unitPrice.toFixed(2)}/{sug.unit}
+                    {sug.isMaterial && " (materjal)"}
+                  </span>
+                </div>
+                <button
+                  onClick={() => addSuggestion(sug)}
+                  className="ml-3 px-3 py-1 text-xs font-medium text-purple-600 border border-purple-300 rounded hover:bg-purple-50"
+                >
+                  + Lisa
+                </button>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
 
       {/* Add/Edit form modal */}
       {showForm && (

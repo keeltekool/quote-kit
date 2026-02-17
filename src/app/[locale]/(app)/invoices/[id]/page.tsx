@@ -58,6 +58,52 @@ export default function InvoiceDetailPage() {
 
   const [exporting, setExporting] = useState(false);
 
+  const handleShare = async (method: "whatsapp" | "email") => {
+    if (!invoice) return;
+
+    const res = await fetch("/api/export/pdf", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ documentType: "invoice", documentId: invoice.id }),
+    });
+    if (!res.ok) {
+      alert("PDF genereerimine ebaõnnestus");
+      return;
+    }
+
+    const blob = await res.blob();
+    const file = new File([blob], `Arve_${invoice.invoiceNumber}.pdf`, {
+      type: "application/pdf",
+    });
+
+    if (method === "whatsapp" && navigator.share) {
+      try {
+        await navigator.share({ files: [file] });
+        return;
+      } catch {
+        // Fallback
+      }
+    }
+
+    if (method === "email") {
+      const biz = invoice.businessSnapshot;
+      const subject = encodeURIComponent(
+        `Arve ${invoice.invoiceNumber} — ${biz.companyName}`
+      );
+      window.open(`mailto:${invoice.clientSnapshot.email || ""}?subject=${subject}`);
+    }
+
+    // Download as fallback
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = file.name;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  };
+
   const handleExportPdf = async () => {
     if (!invoice) return;
     setExporting(true);
@@ -160,6 +206,18 @@ export default function InvoiceDetailPage() {
             className="px-4 py-2 text-sm font-medium text-blue-600 border border-blue-300 rounded-lg hover:bg-blue-50 disabled:opacity-50"
           >
             {exporting ? "..." : "PDF"}
+          </button>
+          <button
+            onClick={() => handleShare("whatsapp")}
+            className="px-3 py-2 text-sm text-muted border border-border rounded-lg hover:bg-surface"
+          >
+            WhatsApp
+          </button>
+          <button
+            onClick={() => handleShare("email")}
+            className="px-3 py-2 text-sm text-muted border border-border rounded-lg hover:bg-surface"
+          >
+            E-post
           </button>
           {(invoice.status === "issued" || invoice.status === "sent") && (
             <button

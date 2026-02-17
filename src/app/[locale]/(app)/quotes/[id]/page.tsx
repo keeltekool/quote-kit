@@ -60,6 +60,69 @@ export default function QuoteDetailPage() {
   }, [params.id, router]);
 
   const [exporting, setExporting] = useState(false);
+  const [duplicating, setDuplicating] = useState(false);
+
+  const handleDuplicate = async () => {
+    if (!quote) return;
+    setDuplicating(true);
+    try {
+      const res = await fetch(`/api/quotes/${quote.id}/duplicate`, {
+        method: "POST",
+      });
+      if (!res.ok) throw new Error("Duplicate failed");
+      const { data } = await res.json();
+      router.push(`/quotes/${data.id}`);
+    } catch {
+      alert("Kopeerimine ebaõnnestus");
+      setDuplicating(false);
+    }
+  };
+
+  const handleShare = async (method: "whatsapp" | "email") => {
+    if (!quote) return;
+
+    // Generate PDF first
+    const res = await fetch("/api/export/pdf", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ documentType: "quote", documentId: quote.id }),
+    });
+    if (!res.ok) {
+      alert("PDF genereerimine ebaõnnestus");
+      return;
+    }
+
+    const blob = await res.blob();
+    const file = new File([blob], `Pakkumine_${quote.quoteNumber}.pdf`, {
+      type: "application/pdf",
+    });
+
+    if (method === "whatsapp" && navigator.share) {
+      try {
+        await navigator.share({ files: [file] });
+        return;
+      } catch {
+        // Fallback: download and let user attach
+      }
+    }
+
+    if (method === "email") {
+      const subject = encodeURIComponent(
+        `Pakkumine ${quote.quoteNumber} — ${quote.businessSnapshot.companyName}`
+      );
+      window.open(`mailto:${quote.clientSnapshot.email || ""}?subject=${subject}`);
+    }
+
+    // Download as fallback
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = file.name;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  };
 
   const handleExportPdf = async () => {
     if (!quote) return;
@@ -155,13 +218,42 @@ export default function QuoteDetailPage() {
           >
             {exporting ? "..." : "PDF"}
           </button>
+          <button
+            onClick={() => handleShare("whatsapp")}
+            className="px-3 py-2 text-sm text-muted border border-border rounded-lg hover:bg-surface"
+            title="WhatsApp"
+          >
+            WhatsApp
+          </button>
+          <button
+            onClick={() => handleShare("email")}
+            className="px-3 py-2 text-sm text-muted border border-border rounded-lg hover:bg-surface"
+            title="Email"
+          >
+            E-post
+          </button>
+          <button
+            onClick={handleDuplicate}
+            disabled={duplicating}
+            className="px-3 py-2 text-sm text-muted border border-border rounded-lg hover:bg-surface disabled:opacity-50"
+          >
+            {duplicating ? "..." : t("quotes.duplicate")}
+          </button>
           {quote.status === "draft" && (
-            <button
-              onClick={() => handleStatusUpdate("sent")}
-              className="px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-lg hover:bg-blue-700"
-            >
-              {t("quotes.send")}
-            </button>
+            <>
+              <button
+                onClick={() => router.push(`/quotes/${quote.id}/edit`)}
+                className="px-4 py-2 text-sm font-medium text-blue-600 border border-blue-300 rounded-lg hover:bg-blue-50"
+              >
+                {t("common.edit")}
+              </button>
+              <button
+                onClick={() => handleStatusUpdate("sent")}
+                className="px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-lg hover:bg-blue-700"
+              >
+                {t("quotes.send")}
+              </button>
+            </>
           )}
           {quote.status === "sent" && (
             <>
