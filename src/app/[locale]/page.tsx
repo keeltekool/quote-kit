@@ -1,6 +1,6 @@
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/routing";
-import { SignedIn, SignedOut, SignInButton } from "@clerk/nextjs";
+import { SignedIn, SignedOut } from "@clerk/nextjs";
 
 export default function HomePage() {
   const t = useTranslations();
@@ -16,17 +16,18 @@ export default function HomePage() {
         </p>
 
         <SignedOut>
-          <SignInButton mode="modal">
-            <button className="inline-flex items-center justify-center rounded-lg bg-blue-600 px-6 py-3 text-sm font-medium text-white hover:bg-blue-700 transition-colors">
-              Alusta / Get Started
-            </button>
-          </SignInButton>
+          <Link
+            href="/sign-in"
+            className="inline-flex items-center justify-center rounded-lg bg-fjord-700 px-6 py-3 text-sm font-medium text-white hover:bg-fjord-800 transition-colors"
+          >
+            Alusta / Get Started
+          </Link>
         </SignedOut>
 
         <SignedIn>
           <Link
             href="/dashboard"
-            className="inline-flex items-center justify-center rounded-lg bg-blue-600 px-6 py-3 text-sm font-medium text-white hover:bg-blue-700 transition-colors"
+            className="inline-flex items-center justify-center rounded-lg bg-fjord-700 px-6 py-3 text-sm font-medium text-white hover:bg-fjord-800 transition-colors"
           >
             {t("nav.dashboard")}
           </Link>

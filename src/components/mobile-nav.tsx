@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useTranslations } from "next-intl";
 import { Link, usePathname } from "@/i18n/routing";
+import { UserButton } from "@clerk/nextjs";
 import { QuoteKitLogo } from "@/components/quotekit-logo";
 
 // Same color-coding as desktop sidebar
@@ -73,6 +74,14 @@ export function MobileNav() {
               </Link>
             );
           })}
+          <div className="pt-2 mt-2 border-t border-border px-3 py-2.5">
+            <UserButton
+              afterSignOutUrl="/"
+              appearance={{
+                elements: { avatarBox: "h-8 w-8" },
+              }}
+            />
+          </div>
         </nav>
       )}
     </div>
