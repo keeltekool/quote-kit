@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useCallback } from "react";
 import { useTranslations } from "next-intl";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 
 type Client = {
   id: string;
@@ -35,9 +35,15 @@ type LineItem = {
 export default function NewQuotePage() {
   const t = useTranslations();
   const router = useRouter();
+  const searchParams = useSearchParams();
 
-  // Step state
-  const [step, setStep] = useState(1); // 1: client, 2: describe, 3: review
+  // Pre-fill from hanked (procurement) flow
+  const prefillClientId = searchParams.get("clientId") || "";
+  const hankeRef = searchParams.get("hankeRef") || "";
+  const hankeTitle = searchParams.get("hankeTitle") || "";
+
+  // Step state — skip to step 2 if client pre-selected from hanked
+  const [step, setStep] = useState(prefillClientId ? 2 : 1);
 
   // Data
   const [clients, setClients] = useState<Client[]>([]);
@@ -45,10 +51,12 @@ export default function NewQuotePage() {
   const [loading, setLoading] = useState(true);
 
   // Step 1: Client selection
-  const [selectedClientId, setSelectedClientId] = useState("");
+  const [selectedClientId, setSelectedClientId] = useState(prefillClientId);
 
   // Step 2: Job description + AI
-  const [jobDescription, setJobDescription] = useState("");
+  const [jobDescription, setJobDescription] = useState(
+    hankeTitle ? `${hankeTitle}${hankeRef ? ` (Hanke viide: ${hankeRef})` : ""}` : ""
+  );
   const [selectedServiceIds, setSelectedServiceIds] = useState<string[]>([]);
   const [generating, setGenerating] = useState(false);
   const [aiThinking, setAiThinking] = useState("");

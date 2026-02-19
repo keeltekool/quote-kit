@@ -12,6 +12,7 @@ const sectionStyles: Record<string, { active: string; iconActive?: string }> = {
   invoices:  { active: "bg-[#F5F3F7] text-[#6B5B73] font-semibold" },
   clients:   { active: "bg-emerald-50 text-emerald-600 font-semibold" },
   services:  { active: "bg-[#FBF8F1] text-[#92702D] font-semibold" },
+  hanked:    { active: "bg-teal-50 text-teal-700 font-semibold" },
   settings:  { active: "bg-[#F0F3F5] text-fjord-600 font-semibold" },
 };
 
@@ -21,6 +22,7 @@ const navItems = [
   { key: "invoices", href: "/invoices" as const, icon: ReceiptIcon },
   { key: "clients", href: "/clients" as const, icon: UsersIcon },
   { key: "services", href: "/services" as const, icon: WrenchIcon },
+  { key: "hanked", href: "/hanked" as const, icon: MegaphoneIcon },
   { key: "settings", href: "/settings" as const, icon: SettingsIcon },
 ] as const;
 
@@ -105,6 +107,14 @@ function WrenchIcon({ className, strokeWidth = 2 }: { className?: string; stroke
   return (
     <svg className={className} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={strokeWidth} strokeLinecap="round" strokeLinejoin="round">
       <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76Z" />
+    </svg>
+  );
+}
+
+function MegaphoneIcon({ className, strokeWidth = 2 }: { className?: string; strokeWidth?: number }) {
+  return (
+    <svg className={className} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={strokeWidth} strokeLinecap="round" strokeLinejoin="round">
+      <path d="m3 11 18-5v12L3 13v-2z" /><path d="M11.6 16.8a3 3 0 1 1-5.8-1.6" />
     </svg>
   );
 }

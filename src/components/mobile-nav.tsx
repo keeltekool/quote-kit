@@ -13,6 +13,7 @@ const sectionStyles: Record<string, string> = {
   invoices:  "bg-[#F5F3F7] text-[#6B5B73] font-semibold",
   clients:   "bg-emerald-50 text-emerald-600 font-semibold",
   services:  "bg-[#FBF8F1] text-[#92702D] font-semibold",
+  hanked:    "bg-teal-50 text-teal-700 font-semibold",
   settings:  "bg-[#F0F3F5] text-fjord-600 font-semibold",
 };
 
@@ -22,6 +23,7 @@ const navItems = [
   { key: "invoices", href: "/invoices" as const },
   { key: "clients", href: "/clients" as const },
   { key: "services", href: "/services" as const },
+  { key: "hanked", href: "/hanked" as const },
   { key: "settings", href: "/settings" as const },
 ] as const;
 
