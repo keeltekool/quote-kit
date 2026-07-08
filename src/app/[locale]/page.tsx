@@ -83,60 +83,110 @@ export default function HomePage() {
   const t = useTranslations();
 
   return (
-    <div className="min-h-screen bg-surface">
+    <div className="min-h-screen bg-fjord-50 font-sans text-fjord-950">
 
-      {/* ── 1. Hero ─────────────────────────────────────────────────────── */}
-      <section className="px-4 pt-16 pb-20 sm:pt-24 sm:pb-28">
-        <div className="max-w-3xl mx-auto text-center">
-          <div className="flex justify-center mb-8">
+      {/* ── Nav ─────────────────────────────────────────────────────────── */}
+      <header className="sticky top-0 z-50 border-b border-fjord-100 bg-fjord-50/85 backdrop-blur-sm">
+        <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-5 sm:px-8">
+          <Link href="/" className="no-underline">
             <QuoteKitLogo variant="full" />
-          </div>
-          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-foreground leading-tight">
-            Pakkumised ja arved, mis vastavad Eesti seadustele
-          </h1>
-          <p className="mt-5 text-lg text-muted max-w-xl mx-auto">
-            Tee hinnapakkumine valmis 5 minutiga. Seaduslikud klauslid, käibemaks, garantii — kõik on juba sees.
-          </p>
-          <div className="mt-8">
+          </Link>
+          <nav className="hidden items-center gap-1 md:flex">
+            <a href="#funktsioonid" className="rounded-lg px-3 py-2 text-sm font-medium text-fjord-600 transition-colors hover:text-fjord-950">Funktsioonid</a>
+            <a href="#seadused" className="rounded-lg px-3 py-2 text-sm font-medium text-fjord-600 transition-colors hover:text-fjord-950">Seadused</a>
+            <a href="#kellele" className="rounded-lg px-3 py-2 text-sm font-medium text-fjord-600 transition-colors hover:text-fjord-950">Kellele</a>
+          </nav>
+          <div className="flex items-center gap-2">
             <SignedOut>
-              <Link
-                href="/sign-in"
-                className="inline-flex items-center gap-2 rounded-lg bg-fjord-700 px-8 py-3.5 text-sm font-semibold text-white hover:bg-fjord-800 transition-colors"
-              >
-                Proovi tasuta
-                <ArrowRightIcon className="h-4 w-4" />
+              <Link href="/sign-in" className="rounded-lg px-3.5 py-2 text-sm font-medium text-fjord-700 no-underline transition-colors hover:text-fjord-950">
+                Logi sisse
               </Link>
-              <p className="mt-3 text-xs text-muted">Tasuta &middot; Ei küsi kaarti</p>
+              <Link href="/sign-in" className="rounded-lg bg-fjord-700 px-4 py-2 text-sm font-semibold text-white no-underline transition-colors hover:bg-fjord-800">
+                Proovi tasuta
+              </Link>
             </SignedOut>
             <SignedIn>
-              <Link
-                href="/dashboard"
-                className="inline-flex items-center gap-2 rounded-lg bg-fjord-700 px-8 py-3.5 text-sm font-semibold text-white hover:bg-fjord-800 transition-colors"
-              >
+              <Link href="/dashboard" className="rounded-lg bg-fjord-700 px-4 py-2 text-sm font-semibold text-white no-underline transition-colors hover:bg-fjord-800">
                 {t("nav.dashboard")}
-                <ArrowRightIcon className="h-4 w-4" />
               </Link>
             </SignedIn>
           </div>
         </div>
+      </header>
+
+      {/* ── 1. Hero ─────────────────────────────────────────────────────── */}
+      <section className="border-b border-fjord-100 px-5 py-16 sm:px-8 sm:py-24">
+        <div className="mx-auto grid max-w-6xl items-center gap-14 lg:grid-cols-[1.05fr_1fr]">
+          {/* Copy */}
+          <div>
+            <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-fjord-200 bg-white px-3 py-1.5 text-xs font-semibold text-fjord-600">
+              <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
+              Tehtud Eesti käsitöölistele
+            </div>
+            <h1 className="text-4xl font-bold leading-[1.08] tracking-tight text-fjord-950 sm:text-5xl">
+              Pakkumised ja arved,<br />
+              <span className="text-fjord-700">mis on juba seaduslikud</span>
+            </h1>
+            <p className="mt-5 max-w-md text-lg leading-relaxed text-fjord-600">
+              Tee hinnapakkumine valmis <span className="font-mono font-semibold text-fjord-800">5&nbsp;minutiga</span>. Käibemaks, garantii ja VÕS klauslid arvutatakse ja lisatakse automaatselt.
+            </p>
+            <div className="mt-8 flex flex-wrap items-center gap-3">
+              <SignedOut>
+                <Link href="/sign-in" className="inline-flex items-center gap-2 rounded-lg bg-fjord-700 px-7 py-3.5 text-sm font-semibold text-white no-underline transition-colors hover:bg-fjord-800">
+                  Proovi tasuta
+                  <ArrowRightIcon className="h-4 w-4" />
+                </Link>
+                <a href="#funktsioonid" className="inline-flex items-center gap-2 rounded-lg border border-fjord-200 bg-white px-7 py-3.5 text-sm font-semibold text-fjord-700 no-underline transition-colors hover:border-fjord-300 hover:bg-fjord-50">
+                  Vaata, kuidas töötab
+                </a>
+              </SignedOut>
+              <SignedIn>
+                <Link href="/dashboard" className="inline-flex items-center gap-2 rounded-lg bg-fjord-700 px-7 py-3.5 text-sm font-semibold text-white no-underline transition-colors hover:bg-fjord-800">
+                  {t("nav.dashboard")}
+                  <ArrowRightIcon className="h-4 w-4" />
+                </Link>
+              </SignedIn>
+            </div>
+            <p className="mt-4 text-xs text-fjord-500">Tasuta &middot; Ei küsi kaarti &middot; Eesti keeles</p>
+          </div>
+
+          {/* Product artifact — a real quote */}
+          <div className="relative lg:pl-6">
+            <QuoteMock />
+          </div>
+        </div>
+      </section>
+
+      {/* ── Stat strip ──────────────────────────────────────────────────── */}
+      <section className="border-b border-fjord-100 bg-white px-5 py-8 sm:px-8">
+        <div className="mx-auto grid max-w-6xl grid-cols-2 gap-6 sm:grid-cols-4">
+          <Stat number="5 min" label="Pakkumine valmis" />
+          <Stat number="24%" label="Käibemaks automaatselt" />
+          <Stat number="3" label="Seadust sisse ehitatud" />
+          <Stat number="0 €" label="Kuutasu" />
+        </div>
       </section>
 
       {/* ── 2. Problem Statement ────────────────────────────────────────── */}
-      <section className="bg-fjord-50 border-y border-fjord-100 px-4 py-16 sm:py-20">
-        <div className="max-w-5xl mx-auto">
-          <h2 className="text-2xl sm:text-3xl font-bold text-foreground text-center mb-12">
-            Tuttav olukord?
-          </h2>
-          <div className="grid md:grid-cols-3 gap-6">
+      <section className="px-5 py-16 sm:px-8 sm:py-24">
+        <div className="mx-auto max-w-6xl">
+          <div className="mb-12 max-w-2xl">
+            <SectionLabel>Probleem</SectionLabel>
+            <h2 className="mt-3 text-3xl font-bold tracking-tight text-fjord-950">Tuttav olukord?</h2>
+          </div>
+          <div className="grid gap-5 md:grid-cols-3">
             <ProblemCard
+              num="01"
               title="Pakkumine Excelis, arve Wordis"
               description="Kopeeri-kleebi kliendi andmed, arvuta käibemaks kalkulaatoriga, kujunda PDF käsitsi. Iga pakkumine võtab pool tundi."
             />
             <ProblemCard
+              num="02"
               title="Mis see VÕS § 639 oli?"
               description="Tead, et pakkumisel peab mingi klausel olema, aga mis täpselt? Guugeldad iga kord uuesti."
             />
             <ProblemCard
+              num="03"
               title="Arve number... 17? Või 18?"
               description="Nummerdamine läheb sassi, raamatupidaja helistab, nüüd on jama."
             />
@@ -144,139 +194,97 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ── 3. Solution Pivot ───────────────────────────────────────────── */}
-      <section className="px-4 py-16 sm:py-20">
-        <div className="max-w-3xl mx-auto text-center">
-          <h2 className="text-2xl sm:text-3xl font-bold text-foreground">
-            QuoteKit teeb selle ära
-          </h2>
-          <p className="mt-4 text-lg text-muted max-w-xl mx-auto">
-            Üks koht pakkumiste ja arvete jaoks. Eesti seadused on juba sisse ehitatud — sina keskendud tööle.
-          </p>
+      {/* ── 3. Features Grid ────────────────────────────────────────────── */}
+      <section id="funktsioonid" className="border-y border-fjord-100 bg-white px-5 py-16 sm:px-8 sm:py-24">
+        <div className="mx-auto max-w-6xl">
+          <div className="mb-12 max-w-2xl">
+            <SectionLabel>Funktsioonid</SectionLabel>
+            <h2 className="mt-3 text-3xl font-bold tracking-tight text-fjord-950">QuoteKit teeb selle ära</h2>
+            <p className="mt-4 text-lg leading-relaxed text-fjord-600">
+              Üks koht pakkumiste ja arvete jaoks. Eesti seadused on juba sisse ehitatud — sina keskendud tööle.
+            </p>
+          </div>
+          <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+            <FeatureCard chipClass="bg-[#FBF8F1] text-[#92702D]" icon={<SparklesIcon className="h-5 w-5" />}
+              title="Teenuste kataloog"
+              description="Sisesta oma eriala ja AI pakub välja teenused koos hindadega. Salvesta kataloog — järgmine pakkumine on ühe klikiga valmis." />
+            <FeatureCard chipClass="bg-cyan-50 text-cyan-600" icon={<ClockIcon className="h-5 w-5" />}
+              title="Pakkumine 5 minutiga"
+              description="Vali klient, lisa read kataloogist. Käibemaks, garantii, VÕS klauslid — kõik arvutatakse ja lisatakse automaatselt." />
+            <FeatureCard chipClass="bg-[#F5F3F7] text-[#6B5B73]" icon={<FileCheckIcon className="h-5 w-5" />}
+              title="Pakkumisest arveks"
+              description="Klient kinnitas? Vajuta nuppu ja arve on valmis. Kõik andmed kanduvad üle, number pannakse automaatselt." />
+            <FeatureCard chipClass="bg-fjord-50 text-fjord-700" icon={<ShareIcon className="h-5 w-5" />}
+              title="Jaga PDF-iga"
+              description="Saada professionaalne PDF otse WhatsAppi, e-postiga või jagatava lingiga. Sinu logo ja andmed on peal." />
+            <FeatureCard chipClass="bg-emerald-50 text-emerald-600" icon={<SearchIcon className="h-5 w-5" />}
+              title="Äriregistri otsing"
+              description="Sisesta registrikood — ettevõtte nimi, aadress ja KMKR ilmuvad automaatselt. Pole vaja midagi käsitsi otsida." />
+            <FeatureCard chipClass="bg-amber-50 text-amber-600" icon={<CalculatorIcon className="h-5 w-5" />}
+              title="Käibemaksu kontroll"
+              description="KM-kohuslasele arvutab 24% automaatselt. Pole veel kohuslane? Süsteem jälgib 40 000 € piiri ja hoiatab ette." />
+          </div>
         </div>
       </section>
 
-      {/* ── 4. Features Grid ────────────────────────────────────────────── */}
-      <section className="px-4 pb-16 sm:pb-20">
-        <div className="max-w-5xl mx-auto grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
-          <FeatureCard
-            icon={<SparklesIcon className="h-6 w-6 text-fjord-700" />}
-            title="Teenuste kataloog"
-            description="Sisesta oma eriala ja AI pakub välja teenused koos hindadega. Salvesta kataloog — järgmine pakkumine on ühe klikiga valmis."
-          />
-          <FeatureCard
-            icon={<ClockIcon className="h-6 w-6 text-fjord-700" />}
-            title="Pakkumine 5 minutiga"
-            description="Vali klient, lisa read kataloogist. Käibemaks, garantii, VÕS klauslid — kõik arvutatakse ja lisatakse automaatselt."
-          />
-          <FeatureCard
-            icon={<FileCheckIcon className="h-6 w-6 text-fjord-700" />}
-            title="Pakkumisest arveks"
-            description="Klient kinnitas? Vajuta nuppu ja arve on valmis. Kõik andmed kanduvad üle, number pannakse automaatselt."
-          />
-          <FeatureCard
-            icon={<ShareIcon className="h-6 w-6 text-fjord-700" />}
-            title="Jaga PDF-iga"
-            description="Saada professionaalne PDF otse WhatsAppi, e-postiga või jagatava lingiga. Sinu logo ja andmed on peal."
-          />
-          <FeatureCard
-            icon={<SearchIcon className="h-6 w-6 text-fjord-700" />}
-            title="Äriregistri otsing"
-            description="Sisesta registrikood — ettevõtte nimi, aadress ja KMKR ilmuvad automaatselt. Pole vaja midagi käsitsi otsida."
-          />
-          <FeatureCard
-            icon={<CalculatorIcon className="h-6 w-6 text-fjord-700" />}
-            title="Käibemaksu kontroll"
-            description="KM-kohuslasele arvutab 24% automaatselt. Pole veel kohuslane? Süsteem jälgib 40 000 € piiri ja hoiatab ette."
-          />
-        </div>
-      </section>
-
-      {/* ── 5. Legal Compliance ─────────────────────────────────────────── */}
-      <section className="px-4 py-16 sm:py-20">
-        <div className="max-w-4xl mx-auto">
-          <div className="text-center mb-12">
-            <div className="flex justify-center mb-4">
-              <ShieldCheckIcon className="h-10 w-10 text-fjord-700" />
-            </div>
-            <h2 className="text-2xl sm:text-3xl font-bold text-foreground">
-              Seadused, millest sa ei pea aru saama
-            </h2>
-            <p className="mt-4 text-muted max-w-lg mx-auto">
+      {/* ── 4. Legal Compliance ─────────────────────────────────────────── */}
+      <section id="seadused" className="px-5 py-16 sm:px-8 sm:py-24">
+        <div className="mx-auto max-w-4xl">
+          <div className="mb-12 max-w-2xl">
+            <SectionLabel>Seaduslikkus</SectionLabel>
+            <h2 className="mt-3 text-3xl font-bold tracking-tight text-fjord-950">Seadused, millest sa ei pea aru saama</h2>
+            <p className="mt-4 text-lg leading-relaxed text-fjord-600">
               QuoteKit lisab õiged klauslid automaatselt. Sinu pakkumised ja arved vastavad Eesti õigusele ilma, et peaksid juristilt nõu küsima.
             </p>
           </div>
           <div className="space-y-4">
-            <LawCard
-              accentClass="border-fjord-700"
-              abbr="VÕS"
-              name="Võlaõigusseadus"
-              description="Mittesiduv pakkumus (§ 16), lisatööde kokkulepe (§ 639), 2-aastane garantii (§ 642), tarbija taganemisõigus (§ 46–49) — igale pakkumisele automaatselt."
-            />
-            <LawCard
-              accentClass="border-fjord-600"
-              abbr="KMS"
-              name="Käibemaksuseadus"
-              description="KM-kohuslasele arvutatakse 24% õigesti. Kui sa pole kohuslane, ei näita süsteem käibemaksu üldse — nii ei teki kogemata § 3 lg 5 vastutust."
-            />
-            <LawCard
-              accentClass="border-fjord-500"
-              abbr="RPS"
-              name="Raamatupidamise seadus"
-              description="Arveid ei saa kustutada — 7 aasta säilituskohustus on tagatud. Nummerdamine on automaatne. Raamatupidaja on rahul."
-            />
+            <LawCard abbr="VÕS" name="Võlaõigusseadus"
+              description="Mittesiduv pakkumus (§ 16), lisatööde kokkulepe (§ 639), 2-aastane garantii (§ 642), tarbija taganemisõigus (§ 46–49) — igale pakkumisele automaatselt." />
+            <LawCard abbr="KMS" name="Käibemaksuseadus"
+              description="KM-kohuslasele arvutatakse 24% õigesti. Kui sa pole kohuslane, ei näita süsteem käibemaksu üldse — nii ei teki kogemata § 3 lg 5 vastutust." />
+            <LawCard abbr="RPS" name="Raamatupidamise seadus"
+              description="Arveid ei saa kustutada — 7 aasta säilituskohustus on tagatud. Nummerdamine on automaatne. Raamatupidaja on rahul." />
           </div>
         </div>
       </section>
 
-      {/* ── 6. Who It's For ─────────────────────────────────────────────── */}
-      <section className="bg-fjord-50 border-y border-fjord-100 px-4 py-16 sm:py-20">
-        <div className="max-w-3xl mx-auto text-center">
-          <h2 className="text-2xl sm:text-3xl font-bold text-foreground mb-8">
-            Kellele?
-          </h2>
-          <div className="flex flex-wrap justify-center gap-3 mb-6">
-            {["Elektritööd", "Torutööd", "Küte ja ventilatsioon", "Gaasitööd", "Viimistlus", "Üldehitus"].map(
-              (trade) => (
-                <span
-                  key={trade}
-                  className="inline-block border border-fjord-200 bg-white rounded-full px-4 py-2 text-sm font-medium text-fjord-700"
-                >
-                  {trade}
-                </span>
-              )
-            )}
+      {/* ── 5. Who It's For ─────────────────────────────────────────────── */}
+      <section id="kellele" className="border-y border-fjord-100 bg-white px-5 py-16 sm:px-8 sm:py-24">
+        <div className="mx-auto max-w-3xl text-center">
+          <SectionLabel center>Kellele</SectionLabel>
+          <h2 className="mt-3 text-3xl font-bold tracking-tight text-fjord-950">Igale Eesti teenusepakkujale</h2>
+          <div className="mt-8 flex flex-wrap justify-center gap-2.5">
+            {["Elektritööd", "Torutööd", "Küte ja ventilatsioon", "Gaasitööd", "Viimistlus", "Üldehitus"].map((trade) => (
+              <span key={trade} className="inline-block rounded-full border border-fjord-200 bg-fjord-50 px-4 py-2 text-sm font-medium text-fjord-700">
+                {trade}
+              </span>
+            ))}
           </div>
-          <p className="text-muted">
-            Oled mõnes muus valdkonnas? QuoteKit sobib igale Eesti teenusepakkujale, kes teeb pakkumisi ja arveid.
+          <p className="mt-6 text-fjord-600">
+            Oled mõnes muus valdkonnas? QuoteKit sobib igale, kes teeb pakkumisi ja arveid.
           </p>
         </div>
       </section>
 
-      {/* ── 7. Final CTA ────────────────────────────────────────────────── */}
-      <section className="bg-fjord-700 px-4 py-16 sm:py-20">
-        <div className="max-w-2xl mx-auto text-center">
-          <h2 className="text-2xl sm:text-3xl font-bold text-white">
+      {/* ── 6. Final CTA ────────────────────────────────────────────────── */}
+      <section className="px-5 py-20 sm:px-8">
+        <div className="mx-auto max-w-5xl overflow-hidden rounded-3xl bg-fjord-950 px-6 py-16 text-center sm:px-12">
+          <ShieldCheckIcon className="mx-auto mb-5 h-9 w-9 text-fjord-300" />
+          <h2 className="mx-auto max-w-xl text-3xl font-bold tracking-tight text-white sm:text-4xl">
             Proovi järele — see on tasuta
           </h2>
-          <p className="mt-4 text-fjord-200 max-w-md mx-auto">
+          <p className="mx-auto mt-4 max-w-md text-fjord-300">
             Pole kuutasu. Pole limiiti. Seadista profiil ja saada esimene pakkumine täna.
           </p>
           <div className="mt-8">
             <SignedOut>
-              <Link
-                href="/sign-in"
-                className="inline-flex items-center gap-2 rounded-lg bg-white px-8 py-3.5 text-sm font-semibold text-fjord-700 hover:bg-fjord-50 transition-colors"
-              >
-                Alusta
+              <Link href="/sign-in" className="inline-flex items-center gap-2 rounded-lg bg-white px-8 py-3.5 text-sm font-semibold text-fjord-950 no-underline transition-colors hover:bg-fjord-100">
+                Alusta tasuta
                 <ArrowRightIcon className="h-4 w-4" />
               </Link>
             </SignedOut>
             <SignedIn>
-              <Link
-                href="/dashboard"
-                className="inline-flex items-center gap-2 rounded-lg bg-white px-8 py-3.5 text-sm font-semibold text-fjord-700 hover:bg-fjord-50 transition-colors"
-              >
+              <Link href="/dashboard" className="inline-flex items-center gap-2 rounded-lg bg-white px-8 py-3.5 text-sm font-semibold text-fjord-950 no-underline transition-colors hover:bg-fjord-100">
                 {t("nav.dashboard")}
                 <ArrowRightIcon className="h-4 w-4" />
               </Link>
@@ -285,11 +293,12 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ── 8. Footer ───────────────────────────────────────────────────── */}
-      <footer className="bg-fjord-950 px-4 py-6">
-        <p className="text-center text-xs text-fjord-400">
-          &copy; 2026 QuoteKit
-        </p>
+      {/* ── 7. Footer ───────────────────────────────────────────────────── */}
+      <footer className="border-t border-fjord-100 px-5 py-8 sm:px-8">
+        <div className="mx-auto flex max-w-6xl flex-col items-center gap-3 sm:flex-row sm:justify-between">
+          <QuoteKitLogo variant="compact" />
+          <p className="text-xs text-fjord-500">&copy; 2026 QuoteKit &middot; Tehtud Eestis</p>
+        </div>
       </footer>
     </div>
   );
@@ -297,51 +306,128 @@ export default function HomePage() {
 
 // ─── Sub-components ─────────────────────────────────────────────────────────
 
-function ProblemCard({ title, description }: { title: string; description: string }) {
+function SectionLabel({ children, center }: { children: React.ReactNode; center?: boolean }) {
   return (
-    <div className="bg-white border border-fjord-100 rounded-xl p-6">
-      <h3 className="font-semibold text-foreground mb-2">{title}</h3>
-      <p className="text-sm text-muted leading-relaxed">{description}</p>
+    <p className={`flex items-center gap-2.5 text-[11px] font-bold uppercase tracking-[0.14em] text-fjord-600 ${center ? "justify-center" : ""}`}>
+      <span className="h-px w-6 bg-fjord-400" />
+      {children}
+    </p>
+  );
+}
+
+function Stat({ number, label }: { number: string; label: string }) {
+  return (
+    <div>
+      <p className="font-mono text-[28px] font-bold leading-none text-fjord-950">{number}</p>
+      <p className="mt-2 text-[13px] font-medium text-fjord-600">{label}</p>
     </div>
   );
 }
 
-function FeatureCard({
-  icon,
-  title,
-  description,
-}: {
-  icon: React.ReactNode;
-  title: string;
-  description: string;
-}) {
+function ProblemCard({ num, title, description }: { num: string; title: string; description: string }) {
   return (
-    <div className="bg-white border border-fjord-100 rounded-xl p-6">
-      <div className="mb-3">{icon}</div>
-      <h3 className="font-semibold text-foreground mb-2">{title}</h3>
-      <p className="text-sm text-muted leading-relaxed">{description}</p>
+    <div className="rounded-xl border border-fjord-100 bg-white p-6">
+      <span className="font-mono text-[13px] font-semibold text-fjord-400">{num}</span>
+      <h3 className="mt-3 font-semibold text-fjord-950">{title}</h3>
+      <p className="mt-2 text-sm leading-relaxed text-fjord-600">{description}</p>
     </div>
   );
 }
 
-function LawCard({
-  accentClass,
-  abbr,
-  name,
-  description,
-}: {
-  accentClass: string;
-  abbr: string;
-  name: string;
-  description: string;
-}) {
+function FeatureCard({ icon, chipClass, title, description }: { icon: React.ReactNode; chipClass: string; title: string; description: string }) {
   return (
-    <div className={`border-l-4 ${accentClass} bg-white border border-fjord-100 rounded-r-xl p-6`}>
-      <div className="flex items-baseline gap-2 mb-2">
-        <span className="font-bold text-foreground">{abbr}</span>
-        <span className="text-sm text-muted">— {name}</span>
+    <div className="rounded-xl border border-fjord-100 bg-white p-6 transition-colors hover:border-fjord-200">
+      <div className={`mb-4 inline-flex h-10 w-10 items-center justify-center rounded-lg ${chipClass}`}>{icon}</div>
+      <h3 className="font-semibold text-fjord-950">{title}</h3>
+      <p className="mt-2 text-sm leading-relaxed text-fjord-600">{description}</p>
+    </div>
+  );
+}
+
+function LawCard({ abbr, name, description }: { abbr: string; name: string; description: string }) {
+  return (
+    <div className="rounded-xl border border-fjord-100 bg-white p-6">
+      <div className="mb-2 flex items-baseline gap-2.5">
+        <span className="font-mono text-base font-bold text-fjord-700">{abbr}</span>
+        <span className="text-sm text-fjord-600">— {name}</span>
       </div>
-      <p className="text-sm text-muted leading-relaxed">{description}</p>
+      <p className="text-sm leading-relaxed text-fjord-600">{description}</p>
+    </div>
+  );
+}
+
+// ─── Hero product artifact: a realistic quote ────────────────────────────────
+
+function QuoteMock() {
+  return (
+    <div className="mx-auto w-full max-w-[440px] rounded-2xl border border-fjord-100 bg-white shadow-[0_20px_50px_-24px_rgba(28,43,51,0.25)]">
+      {/* Header */}
+      <div className="flex items-center justify-between border-b border-fjord-100 px-5 py-4">
+        <QuoteKitLogo variant="compact" />
+        <span className="rounded-full border border-fjord-200 bg-fjord-50 px-2.5 py-0.5 text-xs font-medium text-fjord-700">
+          Saadetud
+        </span>
+      </div>
+
+      {/* Meta */}
+      <div className="flex items-start justify-between px-5 pt-5">
+        <div>
+          <p className="text-[11px] font-semibold uppercase tracking-wider text-fjord-600">Hinnapakkumine</p>
+          <p className="font-mono text-lg font-bold text-fjord-950">HP-024</p>
+        </div>
+        <div className="text-right">
+          <p className="text-[11px] font-semibold uppercase tracking-wider text-fjord-600">Klient</p>
+          <p className="text-sm font-medium text-fjord-950">Tamme Kodu OÜ</p>
+          <p className="font-mono text-[12px] text-fjord-500">17.02.2026</p>
+        </div>
+      </div>
+
+      {/* Line items */}
+      <div className="px-5 pt-5">
+        <p className="mb-1.5 text-[10px] font-bold uppercase tracking-wider text-fjord-500">Tööd</p>
+        <MockRow label="Elektritöö" qty="8 h × €35,00" total="€280,00" />
+        <MockRow label="Paigaldus ja seadistus" qty="1 tk" total="€120,00" />
+        <p className="mb-1.5 mt-3 text-[10px] font-bold uppercase tracking-wider text-fjord-500">Materjalid</p>
+        <MockRow label="Kaablid ja tarvikud" qty="40 m × €2,10" total="€84,00" />
+      </div>
+
+      {/* Totals */}
+      <div className="mx-5 mt-4 border-t border-fjord-100 pt-3">
+        <div className="flex items-center justify-between py-0.5">
+          <span className="text-[13px] text-fjord-600">Vahesumma</span>
+          <span className="font-mono text-[13px] text-fjord-700">€484,00</span>
+        </div>
+        <div className="flex items-center justify-between py-0.5">
+          <span className="text-[13px] text-fjord-600">Käibemaks 24%</span>
+          <span className="font-mono text-[13px] text-fjord-700">€116,16</span>
+        </div>
+        <div className="mt-1 flex items-center justify-between border-t-2 border-fjord-100 pt-2">
+          <span className="text-sm font-semibold text-fjord-950">Kokku</span>
+          <span className="font-mono text-xl font-bold text-fjord-950">€600,16</span>
+        </div>
+      </div>
+
+      {/* Auto clause */}
+      <div className="mx-5 mb-5 mt-4 flex items-center gap-2 rounded-lg border border-amber-100 bg-amber-50/60 px-3.5 py-2.5">
+        <span className="flex h-4 w-4 flex-shrink-0 items-center justify-center rounded-full bg-amber-100 text-amber-600">
+          <svg className="h-2.5 w-2.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={3} strokeLinecap="round" strokeLinejoin="round"><path d="M20 6 9 17l-5-5" /></svg>
+        </span>
+        <p className="text-xs text-fjord-700">
+          <span className="font-mono font-semibold">VÕS § 642</span> — 2-a garantii lisatud automaatselt
+        </p>
+      </div>
+    </div>
+  );
+}
+
+function MockRow({ label, qty, total }: { label: string; qty: string; total: string }) {
+  return (
+    <div className="flex items-center justify-between border-b border-fjord-50 py-2">
+      <div>
+        <p className="text-[13px] font-medium text-fjord-950">{label}</p>
+        <p className="font-mono text-[11px] text-fjord-500">{qty}</p>
+      </div>
+      <span className="font-mono text-[13px] font-semibold text-fjord-950">{total}</span>
     </div>
   );
 }
